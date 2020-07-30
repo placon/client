@@ -15,6 +15,7 @@ module.exports = {
   output: {
     filename: "[name].js",
     path: path.resolve("./dist"),
+    publicPath: "/",
   },
   module: {
     rules: [
@@ -67,5 +68,6 @@ module.exports = {
     host: "localhost",
     port: port,
     open: true,
+    historyApiFallback: true,
   },
 };
