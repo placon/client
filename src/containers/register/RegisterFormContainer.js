@@ -5,24 +5,53 @@ import axios from "axios";
 function RegisterFormContainer() {
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(inputs);
-    if (passwordError) {
-      alert("비밀번호와 비밀번호 확인이 다릅니다.");
+
+    if (inputs.password !== inputs.passwordCheck) {
+      return;
+    }
+
+    if (!checkPasswordValidation()) {
+      alert(
+        "비밀번호는 최소 8자 최대 16자이며 \n최소 1개의 숫자와 특수문자가 들어가야 합니다."
+      );
+      return;
+    }
+
+    if (!checkEmailValidation()) {
+      alert("올바른 이메일 형식을 입력해주세요");
+      return;
+    }
+
+    if (
+      inputs.email ||
+      inputs.gender ||
+      inputs.name ||
+      inputs.password ||
+      inputs.passwordCheck ||
+      inputs.targetLanguage ||
+      inputs.nativeLanguage
+    ) {
+      alert("입력하지 않은 데이터가 있습니다.");
       return;
     }
     // 서버로 axios로 요청
     /**
-     * 1. 비밀번호, 비밀번호 확인 같은지, validation 체크
-     * 2. 이메일 validation 체크
-     * 3. 각 항목 비어있는지 체크
      * 4. 프로필사진 업로드
      * 5. 이메일 중복체크
-     * 6. css
      */
   };
 
-  const passwordError = () => {
-    if (inputs.password !== inputs.passwordCheck) {
+  const checkPasswordValidation = () => {
+    const reg = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,16}$/;
+    if (reg.test(inputs.password)) {
+      return true;
+    }
+    return false;
+  };
+
+  const checkEmailValidation = () => {
+    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (reg.test(inputs.email)) {
       return true;
     }
     return false;

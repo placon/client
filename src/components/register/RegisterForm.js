@@ -2,17 +2,6 @@ import React, { useState } from "react";
 import useInput from "../../lib/hooks/useInput";
 
 function RegisterForm(props) {
-  // const [inputs, setInputs] = useState({
-  //   email: "",
-  //   name: "",
-  //   password: "",
-  //   passwordCheck: "",
-  //   image: "",
-  //   nativeLanguage: "",
-  //   targetLanguage: "",
-  //   gender: "",
-  // });
-
   const { onSubmit, onChange, checkEmailDuplication } = props;
 
   const {
@@ -25,21 +14,6 @@ function RegisterForm(props) {
     targetLanguage,
     gender,
   } = props.inputs;
-
-  // const onChange = (e) => {
-  //   if (
-  //     e.target.name === "nativeLanguage" ||
-  //     e.target.name === "targetLanguage" ||
-  //     e.target.name === "gender"
-  //   ) {
-  //     console.log(e.target);
-  //   } else {
-  //     setInputs({
-  //       ...inputs,
-  //       [e.target.name]: e.target.value,
-  //     });
-  //   }
-  // };
 
   return (
     <div>
@@ -78,6 +52,9 @@ function RegisterForm(props) {
             value={passwordCheck}
             onChange={onChange}
           />
+          {password !== passwordCheck && (
+            <div>비밀번호와 비밀번호 확인이 다릅니다</div>
+          )}
         </div>
         <div className="row">
           <span>모국어</span>
