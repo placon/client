@@ -13,7 +13,7 @@ function RegisterForm(props) {
   //   gender: "",
   // });
 
-  const { onSubmit, onChange } = props;
+  const { onSubmit, onChange, checkEmailDuplication } = props;
 
   const {
     email,
@@ -47,7 +47,15 @@ function RegisterForm(props) {
       <form onSubmit={onSubmit}>
         <div className="row">
           <span>이메일</span>
-          <input type="text" name="email" value={email} onChange={onChange} />
+          <input
+            type="text"
+            name="email"
+            value={email}
+            onChange={onChange}
+          />{" "}
+          <button type="button" onClick={checkEmailDuplication}>
+            중복체크
+          </button>
         </div>
         <div className="row">
           <span>이름(서비스 내에서 사용됩니다.)</span>

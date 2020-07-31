@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import RegisterForm from "../../components/register/RegisterForm";
+import axios from "axios";
 
 function RegisterFormContainer() {
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(inputs);
+    if (passwordError) {
+      alert("비밀번호와 비밀번호 확인이 다릅니다.");
+      return;
+    }
     // 서버로 axios로 요청
     /**
      * 1. 비밀번호, 비밀번호 확인 같은지, validation 체크
@@ -14,6 +19,17 @@ function RegisterFormContainer() {
      * 5. 이메일 중복체크
      * 6. css
      */
+  };
+
+  const passwordError = () => {
+    if (inputs.password !== inputs.passwordCheck) {
+      return true;
+    }
+    return false;
+  };
+
+  const checkEmailDuplication = () => {
+    // 서버로 이메일 전송
   };
 
   const [inputs, setInputs] = useState({
@@ -36,7 +52,12 @@ function RegisterFormContainer() {
 
   return (
     <div>
-      <RegisterForm onSubmit={onSubmit} inputs={inputs} onChange={onChange} />
+      <RegisterForm
+        onSubmit={onSubmit}
+        inputs={inputs}
+        onChange={onChange}
+        checkEmailDuplication={checkEmailDuplication}
+      />
     </div>
   );
 }
