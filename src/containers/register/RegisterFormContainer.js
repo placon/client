@@ -23,13 +23,13 @@ function RegisterFormContainer() {
     }
 
     if (
-      inputs.email ||
-      inputs.gender ||
-      inputs.name ||
-      inputs.password ||
-      inputs.passwordCheck ||
-      inputs.targetLanguage ||
-      inputs.nativeLanguage
+      !inputs.email ||
+      !inputs.gender ||
+      !inputs.name ||
+      !inputs.password ||
+      !inputs.passwordCheck ||
+      !inputs.targetLanguage ||
+      !inputs.nativeLanguage
     ) {
       alert("입력하지 않은 데이터가 있습니다.");
       return;
