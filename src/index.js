@@ -5,13 +5,19 @@ import { createStore, applyMiddleware } from "redux";
 import rootReducer from "./reducers";
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension"; // 리덕스 개발자 도구
-import ReduxThunk from "redux-thunk";
+import createSagaMiddleware from "redux-saga";
+// rootSaga 불러와야됨.
+
+const sagaMiddleWare = createSagaMiddleware(); // saga 미들웨어
 
 // 스토어 생성
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(ReduxThunk)) // 미들웨어 적용, logger 사용하는 경우 logger가 제일 마지막에 와야함.
+  composeWithDevTools(applyMiddleware(sagaMiddleWare)) // 미들웨어 적용, logger 사용하는 경우 logger가 제일 마지막에 와야함.
 );
+
+// 스토어 생성된 뒤 실행해야할 코드
+// sagaMiddleWare.run(rootSaga);
 
 ReactDOM.render(
   <Provider store={store}>
