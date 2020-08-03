@@ -15,8 +15,8 @@ module.exports = {
   output: {
     filename: "[name].js",
     path: path.resolve("./dist"),
-    // publicPath: "/",
   },
+  // publicPath: "/",
   module: {
     rules: [
       {
@@ -65,6 +65,8 @@ module.exports = {
       : []),
   ],
   devServer: {
+    contentBase: path.join(__dirname, "dist"),
+    publicPath: "/",
     host: "localhost",
     port: port,
     open: true,

@@ -1,5 +1,5 @@
 import React from "react";
-import RegisterContainer from "../../containers/register/RegisterFormContainer";
+import RegisterContainer from "../../containers/signup/SignupFormContainer";
 
 function RegisterPage() {
   return (

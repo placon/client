@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import RegisterForm from "../../components/register/RegisterForm";
+import RegisterForm from "../../components/signup/SignupForm";
 import axios from "axios";
 
 function RegisterFormContainer() {
