@@ -1,8 +1,10 @@
-import axios from "axios";
 import { all, fork } from "redux-saga/effects";
-import { baseUrl } from "../config/config";
+
 import user from "../sagas/user";
 
-export default function* rootSaga() {
+export function* rootSaga() {
+  console.log("hello world");
   yield all([fork(user)]);
 }
+
+export default rootSaga;

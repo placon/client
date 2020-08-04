@@ -3,10 +3,10 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { createStore, applyMiddleware } from "redux";
 import rootReducer from "./reducers";
+import { rootSaga } from "./sagas";
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension"; // 리덕스 개발자 도구
 import createSagaMiddleware from "redux-saga";
-// rootSaga 불러와야됨.
 
 const sagaMiddleWare = createSagaMiddleware(); // saga 미들웨어
 
@@ -17,7 +17,7 @@ const store = createStore(
 );
 
 // 스토어 생성된 뒤 실행해야할 코드
-// sagaMiddleWare.run(rootSaga);
+sagaMiddleWare.run(rootSaga);
 
 ReactDOM.render(
   <Provider store={store}>

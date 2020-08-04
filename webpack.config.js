@@ -10,7 +10,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || "development";
 module.exports = {
   mode: "development",
   entry: {
-    main: "./src/index.js",
+    main: ["babel-polyfill", "./src/index.js"],
   },
   output: {
     filename: "[name].js",
@@ -67,8 +67,16 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, "dist"),
     publicPath: "/",
-    host: "localhost",
+    // host: "localhost",
+    // compress: true,
     port: 9000,
+    proxy: {
+      "/api": {
+        target: "http://localhost:10001",
+        secure: false,
+        changeOrigin: true,
+      },
+    },
     open: true,
     historyApiFallback: true,
   },

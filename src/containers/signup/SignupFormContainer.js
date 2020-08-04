@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import RegisterForm from "../../components/signup/SignupForm";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { SIGN_UP_REQUEST } from "../../reducers/user";
 
 function RegisterFormContainer() {
+  const dispatch = useDispatch();
+  const { isSignedUp } = useSelector((state) => state.user);
+
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -24,16 +28,24 @@ function RegisterFormContainer() {
 
     if (
       !inputs.email ||
-      !inputs.gender ||
       !inputs.name ||
       !inputs.password ||
       !inputs.passwordCheck ||
+      !inputs.nativeLanguage ||
       !inputs.targetLanguage ||
-      !inputs.nativeLanguage
+      !inputs.gender
     ) {
       alert("입력하지 않은 데이터가 있습니다.");
+      console.log(inputs);
       return;
     }
+    dispatch({
+      type: SIGN_UP_REQUEST,
+      payload: {
+        email: inputs.email,
+        name: inputs.name,
+      },
+    });
     // 서버로 axios로 요청
     /**
      * 4. 프로필사진 업로드
@@ -57,9 +69,7 @@ function RegisterFormContainer() {
     return false;
   };
 
-  const checkEmailDuplication = () => {
-    // 서버로 이메일 전송
-  };
+  const checkEmailDuplication = () => {};
 
   const [inputs, setInputs] = useState({
     email: "",
@@ -69,7 +79,7 @@ function RegisterFormContainer() {
     image: "",
     nativeLanguage: "",
     targetLanguage: "",
-    gender: "",
+    gender: "m",
   });
 
   const onChange = (e) => {
