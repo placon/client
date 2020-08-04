@@ -11,12 +11,17 @@ import UserApi from "../api/user";
 function* signUp(action) {
   console.log("payload 찍어보기", action.payload);
   try {
-    yield call(UserApi.requestSignup, action.payload);
+    const result = yield call(UserApi.requestSignup, action.payload);
+    console.log(result);
     yield put({
       type: SIGN_UP_SUCCESS,
       payload: action.payload,
     });
   } catch (e) {
+    yield put({
+      type: SIGN_UP_FAILURE,
+      errorReason: result.data.error,
+    });
     console.log(e);
   }
 }

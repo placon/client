@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import useInput from "../../lib/hooks/useInput";
 
 function RegisterForm(props) {
-  const { onSubmit, onChange, checkEmailDuplication } = props;
+  const { onSubmit, onChange, duplication, checkEmailDuplication } = props;
 
   const {
     email,
@@ -27,9 +27,13 @@ function RegisterForm(props) {
             value={email}
             onChange={onChange}
           />{" "}
-          <button type="button" onClick={checkEmailDuplication}>
-            중복체크
-          </button>
+          {!duplication ? (
+            <button type="button" onClick={checkEmailDuplication}>
+              중복체크
+            </button>
+          ) : (
+            <span>사용할 수 있는 이메일입니다.</span>
+          )}
         </div>
         <div className="row">
           <span>이름(서비스 내에서 사용됩니다.)</span>

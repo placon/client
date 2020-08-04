@@ -1,13 +1,3 @@
-// 더미데이터
-const dummyUser = {
-  id: "1",
-  email: "abcd@naver.com",
-  name: "나는 킹이다",
-  nativeLanguage: "KR",
-  targetLanguage: "EN",
-  badges: [],
-};
-
 export const initialState = {
   isSignedUp: false, // 회원가입 성공
   isSigningUp: false, // 회원가입 시도중
@@ -24,6 +14,11 @@ export const initialState = {
 export const SIGN_UP_REQUEST = "SIGN_UP_REQUEST";
 export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
 export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
+
+export const signUpRequest = (data) => ({
+  type: SIGN_UP_REQUEST,
+  payload: data,
+});
 
 // 로그인
 export const LOG_IN_REQUEST = "LOG_IN_REQUEST";
@@ -58,7 +53,7 @@ export default (state = initialState, action) => {
         ...state,
         isSigningUp: false,
         isSignedUp: true,
-        signUpErrorReason: action.data.error,
+        signUpErrorReason: action.payload.errorReason,
       };
 
     default:

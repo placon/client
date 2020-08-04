@@ -1,13 +1,14 @@
-import { baseUrl } from "../config/config";
 import axios from "axios";
 
 function requestSignup(data) {
-  console.log("여기 api", data);
-
-  // return axios.post(`${baseUrl}/user/signup`, data);
   return axios.post("/api/users/register", data);
+}
+
+function requestCheckEmailDuplication(email) {
+  return axios.get(`/api/users/register?email=${email}`);
 }
 
 export default {
   requestSignup,
+  requestCheckEmailDuplication,
 };

@@ -1,54 +1,78 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import RegisterForm from "../../components/signup/SignupForm";
 import { useDispatch, useSelector } from "react-redux";
-import { SIGN_UP_REQUEST } from "../../reducers/user";
+import { signUpRequest } from "../../reducers/user";
+import UserAPI from "../../api/user";
 
-function RegisterFormContainer() {
+function RegisterFormContainer({ history }) {
   const dispatch = useDispatch();
   const { isSignedUp } = useSelector((state) => state.user);
+  const [duplication, setDuplication] = useState(false);
+
+  useEffect(() => {
+    if (isSignedUp) {
+      alert("회원가입이 성공적으로 이루어졌습니다!");
+      history.push("/login");
+    }
+  }, [isSignedUp]);
 
   const onSubmit = (e) => {
     e.preventDefault();
+    const {
+      email,
+      name,
+      password,
+      passwordCheck,
+      nativeLanguage,
+      targetLanguage,
+      gender,
+    } = inputs;
 
-    if (inputs.password !== inputs.passwordCheck) {
+    if (password !== passwordCheck) {
       return;
     }
-
     if (!checkPasswordValidation()) {
       alert(
-        "비밀번호는 최소 8자 최대 16자이며 \n최소 1개의 숫자와 특수문자가 들어가야 합니다."
+        "비밀번호는 최소 8자 최대 16자이며 \n최소 1개의 숫자와 특수문자가 포함되어야 합니다."
       );
       return;
     }
-
     if (!checkEmailValidation()) {
-      alert("올바른 이메일 형식을 입력해주세요");
+      alert("올바른 이메일 형식을 입력해주세요.");
+      return;
+    }
+    if (!duplication) {
+      alert("이메일 중복확인을 해주세요.");
       return;
     }
 
     if (
-      !inputs.email ||
-      !inputs.name ||
-      !inputs.password ||
-      !inputs.passwordCheck ||
-      !inputs.nativeLanguage ||
-      !inputs.targetLanguage ||
-      !inputs.gender
+      !email ||
+      !name ||
+      !password ||
+      !passwordCheck ||
+      !nativeLanguage ||
+      !targetLanguage ||
+      !gender
     ) {
       alert("입력하지 않은 데이터가 있습니다.");
-      console.log(inputs);
       return;
     }
-    dispatch({
-      type: SIGN_UP_REQUEST,
-      payload: {
-        email: inputs.email,
-        name: inputs.name,
-      },
-    });
+
+    dispatch(
+      signUpRequest({
+        email,
+        name,
+        password,
+        passwordCheck,
+        nativeLanguage,
+        targetLanguage,
+        gender,
+      })
+    );
+
     // 서버로 axios로 요청
     /**
-     * 4. 프로필사진 업로드
      * 5. 이메일 중복체크
      */
   };
@@ -69,7 +93,12 @@ function RegisterFormContainer() {
     return false;
   };
 
-  const checkEmailDuplication = () => {};
+  const checkEmailDuplication = async () => {
+    const { data } = await UserAPI.requestCheckEmailDuplication(inputs.email);
+    if (data) {
+      setDuplication(true);
+    }
+  };
 
   const [inputs, setInputs] = useState({
     email: "",
@@ -95,6 +124,7 @@ function RegisterFormContainer() {
         onSubmit={onSubmit}
         inputs={inputs}
         onChange={onChange}
+        duplication={duplication}
         checkEmailDuplication={checkEmailDuplication}
       />
     </div>
