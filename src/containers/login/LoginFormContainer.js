@@ -1,12 +1,26 @@
 import React, { useState } from "react";
 import LoginForm from "../../components/login/LoginForm";
-import useInput from "../../lib/hooks/useInput";
+import { useDispatch, useSelector } from "react-redux";
+import { loginRequest } from "../../reducers/user";
 import "./loginContainer.scss";
 
 function LoginFormContainer() {
+  const dispatch = useDispatch();
+
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(inputs);
+    const { email, password } = inputs;
+    if (!email || !password) {
+      alert("아이디 혹은 비밀번호를 입력하지 않았습니다.");
+      return;
+    }
+
+    dispatch(
+      loginRequest({
+        email,
+        password,
+      })
+    );
   };
 
   const [inputs, setInputs] = useState({

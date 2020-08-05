@@ -3,6 +3,9 @@ import {
   SIGN_UP_REQUEST,
   SIGN_UP_SUCCESS,
   SIGN_UP_FAILURE,
+  LOG_IN_SUCCESS,
+  LOG_IN_FAILURE,
+  LOG_IN_REQUEST,
 } from "../reducers/user";
 
 import UserApi from "../api/user";
@@ -22,7 +25,6 @@ function* signUp(action) {
       type: SIGN_UP_FAILURE,
       errorReason: result.data.error,
     });
-    console.log(e);
   }
 }
 
@@ -30,6 +32,28 @@ function* watchSignup() {
   yield takeEvery(SIGN_UP_REQUEST, signUp);
 }
 
+// 로그인
+function* login(action) {
+  console.log(action.data);
+  try {
+    const result = yield call(UserApi.requestLogin, action.payload);
+    console.log(result);
+    yield put({
+      type: LOG_IN_SUCCESS,
+      payload: action.payload,
+    });
+  } catch (e) {
+    yield put({
+      type: LOG_IN_FAILURE,
+      errorReason: result.data.error,
+    });
+  }
+}
+
+function* watchLogin() {
+  yield takeEvery(LOG_IN_REQUEST, login);
+}
+
 export default function* userSaga() {
-  yield all([fork(watchSignup)]);
+  yield all([fork(watchSignup), fork(watchLogin)]);
 }

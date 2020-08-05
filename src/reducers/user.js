@@ -6,6 +6,7 @@ export const initialState = {
   isLoggedIn: false, // 로그인 성공
   isLoggingIn: false, // 로그인 실패
   loginErrorReason: "", // 로그인 실패 사유
+  myInfo: null,
 
   isLoggingOut: false, // 로그아웃 시도중
 };
@@ -24,6 +25,11 @@ export const signUpRequest = (data) => ({
 export const LOG_IN_REQUEST = "LOG_IN_REQUEST";
 export const LOG_IN_SUCCESS = "LOG_IN_SUCCESS";
 export const LOG_IN_FAILURE = "LOG_IN_FAILURE";
+
+export const loginRequest = (data) => ({
+  type: LOG_IN_REQUEST,
+  payload: data,
+});
 
 // 로그아웃
 export const LOG_OUT_REQUEST = "LOG_OUT_REQUEST";

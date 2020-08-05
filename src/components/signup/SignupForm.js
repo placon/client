@@ -9,7 +9,6 @@ function RegisterForm(props) {
     name,
     password,
     passwordCheck,
-    image,
     nativeLanguage,
     targetLanguage,
     gender,
