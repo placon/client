@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useInput from "../../lib/hooks/useInput";
+import "./index.scss";
 
 function RegisterForm(props) {
   const { onSubmit, onChange, duplication, checkEmailDuplication } = props;

@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import LoginForm from "../../components/login/LoginForm";
+import LoginForm from "../../components/login";
 import { useDispatch, useSelector } from "react-redux";
 import { loginRequest } from "../../reducers/user";
-import "./loginContainer.scss";
 
 function LoginFormContainer() {
   const dispatch = useDispatch();

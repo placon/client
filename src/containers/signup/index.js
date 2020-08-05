@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import RegisterForm from "../../components/signup/SignupForm";
+import SignupForm from "../../components/signup";
 import { useDispatch, useSelector } from "react-redux";
 import { signUpRequest } from "../../reducers/user";
 import UserAPI from "../../api/user";
@@ -120,7 +120,7 @@ function RegisterFormContainer({ history }) {
 
   return (
     <div>
-      <RegisterForm
+      <SignupForm
         onSubmit={onSubmit}
         inputs={inputs}
         onChange={onChange}
