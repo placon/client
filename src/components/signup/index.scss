@@ -1,0 +1,58 @@
+.container {
+  max-width: 600px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+h2 {
+  padding-bottom: 40px;
+  text-align: center;
+}
+
+input {
+  width: 100%;
+  min-width: 300px;
+  max-width: 400px;
+  border-top-width: 0;
+  border-right-width: 0;
+  border-left-width: 0;
+  border-bottom-color: #dbdbdb;
+}
+
+select {
+  width: 300px;
+  height: 40px;
+}
+
+form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.row {
+  max-width: 500px;
+  h4 {
+    width: 400px;
+    margin: 20px 0;
+    font-size: 14px;
+    text-align: left;
+  }
+
+  &:nth-child(1) {
+    input {
+      width: 300px;
+    }
+  }
+}
+
+.submit {
+  margin-top: 30px;
+}
+
+button {
+  background-color: white;
+  outline: none;
+  border: none;
+  border: 1px solid #dbdbdb;
+}

@@ -34,11 +34,7 @@ function LoginFormContainer() {
     });
   };
 
-  return (
-    <div className="container">
-      <LoginForm inputs={inputs} onChange={onChange} onSubmit={onSubmit} />
-    </div>
-  );
+  return <LoginForm inputs={inputs} onChange={onChange} onSubmit={onSubmit} />;
 }
 
 export default LoginFormContainer;

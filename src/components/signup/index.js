@@ -16,11 +16,11 @@ function RegisterForm(props) {
   } = props.inputs;
 
   return (
-    <div>
+    <div className="container">
       <h2>회원가입</h2>
       <form onSubmit={onSubmit}>
         <div className="row">
-          <span>이메일</span>
+          <h4>이메일</h4>
           <input
             type="text"
             name="email"
@@ -36,11 +36,11 @@ function RegisterForm(props) {
           )}
         </div>
         <div className="row">
-          <span>이름(서비스 내에서 사용됩니다.)</span>
+          <h4>이름 (서비스 내에서 사용됩니다.)</h4>
           <input type="text" name="name" value={name} onChange={onChange} />
         </div>
         <div className="row">
-          <span>비밀번호</span>
+          <h4>비밀번호</h4>
           <input
             type="password"
             name="password"
@@ -49,7 +49,7 @@ function RegisterForm(props) {
           />
         </div>
         <div className="row">
-          <span>비밀번호 확인</span>
+          <h4>비밀번호 확인</h4>
           <input
             type="password"
             name="passwordCheck"
@@ -61,7 +61,7 @@ function RegisterForm(props) {
           )}
         </div>
         <div className="row">
-          <span>모국어</span>
+          <h4>모국어</h4>
           <select
             name="nativeLanguage"
             value={nativeLanguage}
@@ -72,7 +72,7 @@ function RegisterForm(props) {
           </select>
         </div>
         <div className="row">
-          <span>학습언어</span>
+          <h4>학습언어</h4>
           <select
             name="targetLanguage"
             value={targetLanguage}
@@ -83,13 +83,15 @@ function RegisterForm(props) {
           </select>
         </div>
         <div className="row">
-          <span>성별</span>
+          <h4>성별</h4>
           <select name="gender" value={gender} onChange={onChange}>
             <option value="m">남자</option>
             <option value="f">여자</option>
           </select>
         </div>
-        <button type="submit">완료</button>
+        <button className="submit" type="submit">
+          완료
+        </button>
       </form>
     </div>
   );

@@ -119,7 +119,7 @@ function RegisterFormContainer({ history }) {
   };
 
   return (
-    <div>
+    <>
       <SignupForm
         onSubmit={onSubmit}
         inputs={inputs}
@@ -127,7 +127,7 @@ function RegisterFormContainer({ history }) {
         duplication={duplication}
         checkEmailDuplication={checkEmailDuplication}
       />
-    </div>
+    </>
   );
 }
 
