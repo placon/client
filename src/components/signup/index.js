@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useInput from "../../lib/hooks/useInput";
+import Button from "../ui/Button";
 import "./index.scss";
 
 function RegisterForm(props) {
@@ -89,9 +90,9 @@ function RegisterForm(props) {
             <option value="f">여자</option>
           </select>
         </div>
-        <button className="submit" type="submit">
+        <Button className="submit" type="submit">
           완료
-        </button>
+        </Button>
       </form>
     </div>
   );
