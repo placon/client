@@ -3,7 +3,7 @@ import useInput from "../../lib/hooks/useInput";
 import Button from "../ui/Button";
 import "./index.scss";
 
-function RegisterForm(props) {
+function SignupForm(props) {
   const { onSubmit, onChange, duplication, checkEmailDuplication } = props;
 
   const {
@@ -98,4 +98,4 @@ function RegisterForm(props) {
   );
 }
 
-export default RegisterForm;
+export default SignupForm;

@@ -65,8 +65,8 @@ function RegisterFormContainer({ history }) {
         name,
         password,
         passwordCheck,
-        nativeLanguage,
-        targetLanguage,
+        native_language: nativeLanguage,
+        target_language: targetLanguage,
         gender,
       })
     );
@@ -95,8 +95,12 @@ function RegisterFormContainer({ history }) {
 
   const checkEmailDuplication = async () => {
     const { data } = await UserAPI.requestCheckEmailDuplication(inputs.email);
-    if (data) {
+    console.log("중복확인 데이터", data);
+    if (data && data.check_email) {
       setDuplication(true);
+    } else {
+      alert("이미 존재하는 이메일입니다.");
+      return;
     }
   };
 
