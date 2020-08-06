@@ -42,6 +42,7 @@ function* login(action) {
       type: LOG_IN_SUCCESS,
       payload: action.payload,
     });
+    // auth 요청 해야함.
   } catch (e) {
     yield put({
       type: LOG_IN_FAILURE,

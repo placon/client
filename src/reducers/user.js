@@ -6,9 +6,10 @@ export const initialState = {
   isLoggedIn: false, // 로그인 성공
   isLoggingIn: false, // 로그인 실패
   loginErrorReason: "", // 로그인 실패 사유
-  myInfo: null,
-
   isLoggingOut: false, // 로그아웃 시도중
+
+  userInfo: null,
+  isAuth: false,
 };
 
 // 회원가입
