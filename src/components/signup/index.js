@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import useInput from "../../lib/hooks/useInput";
-import Button from "../ui/Button";
+import Button from "../UI/Button";
 import "./index.scss";
 
 function SignupForm(props) {

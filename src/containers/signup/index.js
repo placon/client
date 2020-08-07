@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SignupForm from "../../components/signup";
+import SignupForm from "../../components/Signup";
 import { useDispatch, useSelector } from "react-redux";
 import { signUpRequest } from "../../reducers/user";
 import UserAPI from "../../api/user";
