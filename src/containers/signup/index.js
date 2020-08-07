@@ -96,7 +96,7 @@ function RegisterFormContainer({ history }) {
   const checkEmailDuplication = async () => {
     const { data } = await UserAPI.requestCheckEmailDuplication(inputs.email);
     console.log("중복확인 데이터", data);
-    if (data && data.check_email) {
+    if (data && data.check_email_id) {
       setDuplication(true);
     } else {
       alert("이미 존재하는 이메일입니다.");
