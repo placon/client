@@ -7,6 +7,7 @@ import { rootSaga } from "./sagas";
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension"; // 리덕스 개발자 도구
 import createSagaMiddleware from "redux-saga";
+import Layout from "./components/Layout";
 
 const sagaMiddleWare = createSagaMiddleware(); // saga 미들웨어
 
@@ -21,7 +22,9 @@ sagaMiddleWare.run(rootSaga);
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Layout>
+      <App />
+    </Layout>
   </Provider>,
   document.getElementById("root")
 );
