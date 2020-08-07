@@ -8,6 +8,15 @@ $blue: #228be6;
   &:active {
     background: darken($color: $color, $amount: 10%);
   }
+  &.outline {
+    color: $color;
+    background:none;
+    border: 1px solid $color;
+    &:hover {
+      background: $color;
+      color: white;
+    }
+  }
 }
 
 .Button {
@@ -38,13 +47,27 @@ $blue: #228be6;
     font-size: 0.875rem;
   }
 
-  &:hover {
-    background: lighten($color: $blue, $amount: 10%);
+  &.blue {
+    @include button-color($blue);
   }
-  &:active {
-    background: darken($color: $blue, $amount: 10%);
+
+  &.pink {
+    @include button-color($blue);
   }
+  &.gray {
+    @include button-color($blue);
+  }
+
   & + & {
     margin-left: 1rem;
+  }
+
+  &.fullWidth {
+    width:100%;
+    text-align: center;
+    &+& {
+      margin-left: 0;
+      margin-top: 1rem;
+    }
   }
 }
