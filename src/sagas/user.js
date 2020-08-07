@@ -36,11 +36,15 @@ function* watchSignup() {
 function* login(action) {
   console.log(action.data);
   try {
-    const result = yield call(UserApi.requestLogin, action.payload);
-    console.log(result);
+    var { data } = yield call(UserApi.requestLogin, action.payload);
+    // console.log("로그인 찌겅보기", data);
+    if (data.login_success) {
+      var { data } = yield call(UserApi.requestAuth);
+      console.log("인증 된건가?", data);
+    }
     yield put({
       type: LOG_IN_SUCCESS,
-      payload: action.payload,
+      payload: data,
     });
     // auth 요청 해야함.
   } catch (e) {

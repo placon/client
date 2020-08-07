@@ -8,8 +8,7 @@ export const initialState = {
   loginErrorReason: "", // 로그인 실패 사유
   isLoggingOut: false, // 로그아웃 시도중
 
-  userInfo: null,
-  isAuth: false,
+  myInfo: null,
 };
 
 // 회원가입
@@ -61,6 +60,22 @@ export default (state = initialState, action) => {
         isSigningUp: false,
         isSignedUp: true,
         signUpErrorReason: action.payload.errorReason,
+      };
+    case LOG_IN_REQUEST:
+      return {
+        ...state,
+        isLoggingIn: true,
+      };
+    case LOG_IN_SUCCESS:
+      return {
+        ...state,
+        isLoggingIn: false,
+        isLoggedIn: true,
+        myInfo: action.payload,
+      };
+    case LOG_IN_FAILURE:
+      return {
+        ...state,
       };
 
     default:

@@ -17,8 +17,8 @@ function requestLogin(data) {
 }
 
 // 인증
-function requestAuth(data) {
-  return axios.get("/api/users/auth", data);
+function requestAuth() {
+  return axios.get("/api/users/auth");
 }
 
 export default {
