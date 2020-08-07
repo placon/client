@@ -3,7 +3,7 @@ import "./index.scss";
 
 function index() {
   return (
-    <header className="container">
+    <header className="header-container">
       <div className="left">PLACON</div>
       <div className="right">Right</div>
     </header>

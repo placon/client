@@ -1,13 +1,14 @@
 import React from "react";
 import Header from "./Header";
+import "./index.scss";
 
 function index({ children }) {
   return (
     <>
       <Header />
+
       <main>
-        <section className="content">{children}</section>
-        <section className="profile">profile</section>
+        <section className="content-section">{children}</section>
       </main>
     </>
   );
