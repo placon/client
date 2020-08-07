@@ -110,8 +110,8 @@ function RegisterFormContainer({ history }) {
     password: "",
     passwordCheck: "",
     image: "",
-    nativeLanguage: "",
-    targetLanguage: "",
+    nativeLanguage: "kr",
+    targetLanguage: "en",
     gender: "m",
   });
 
