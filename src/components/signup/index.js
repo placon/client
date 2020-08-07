@@ -17,7 +17,7 @@ function SignupForm(props) {
   } = props.inputs;
 
   return (
-    <div className="container">
+    <div className="signup-container">
       <h2>회원가입</h2>
       <form onSubmit={onSubmit}>
         <div className="row">
