@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import useInput from "../../lib/hooks/useInput";
 import Button from "../UI/Button";
 import "./index.scss";
 
@@ -19,7 +18,7 @@ function SignupForm(props) {
   return (
     <div className="signup-container">
       <h2>회원가입</h2>
-      <form onSubmit={onSubmit}>
+      <form className="signup-form" onSubmit={onSubmit}>
         <div className="row">
           <h4>이메일</h4>
           <input
@@ -29,9 +28,15 @@ function SignupForm(props) {
             onChange={onChange}
           />{" "}
           {!duplication ? (
-            <button type="button" onClick={checkEmailDuplication}>
-              중복체크
-            </button>
+            <span>
+              <Button
+                type="button"
+                size="small"
+                onClick={checkEmailDuplication}
+              >
+                중복체크
+              </Button>
+            </span>
           ) : (
             <span>사용할 수 있는 이메일입니다.</span>
           )}
@@ -90,9 +95,11 @@ function SignupForm(props) {
             <option value="f">여자</option>
           </select>
         </div>
-        <Button className="submit" type="submit">
-          완료
-        </Button>
+        <div className="submit">
+          <Button type="submit" fullWidth size="large">
+            완료
+          </Button>
+        </div>
       </form>
     </div>
   );
