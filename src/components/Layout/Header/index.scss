@@ -1,7 +1,17 @@
+$icon-width: 25px;
+
+@mixin header-icon() {
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: $icon-width;
+  height: $icon-width;
+}
+
+figure {
+  margin: 0;
+}
+
 .header-container {
-  display: flex;
-  align-items: center;
-  max-width: 900px;
   height: 70px;
   position: fixed;
   top: 0;
@@ -10,8 +20,25 @@
   margin: 0 auto;
   background-color: white;
   border-bottom: 1px solid #ececec;
+}
 
+.inner {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  max-width: 900px;
+  margin: 0 auto;
   .right {
     margin-left: auto;
+    display: flex;
+  }
+
+  .magnifier {
+    background: url("../../../images/magnifier.png");
+    @include header-icon();
+  }
+  .mailbox {
+    background: url("../../../images/mailbox.png");
+    @include header-icon();
   }
 }

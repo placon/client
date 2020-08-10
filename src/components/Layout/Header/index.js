@@ -4,8 +4,13 @@ import "./index.scss";
 function index() {
   return (
     <header className="header-container">
-      <div className="left">PLACON</div>
-      <div className="right">Right</div>
+      <div className="inner">
+        <div className="left">PLACON</div>
+        <div className="right">
+          <figure className="magnifier"></figure>
+          <figure className="mailbox"></figure>
+        </div>
+      </div>
     </header>
   );
 }
