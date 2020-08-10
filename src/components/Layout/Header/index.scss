@@ -1,6 +1,7 @@
-$icon-width: 25px;
+$medium-size: 25px;
+$large-size: 30px;
 
-@mixin header-icon() {
+@mixin header-icon($icon-width) {
   background-repeat: no-repeat;
   background-size: contain;
   width: $icon-width;
@@ -18,6 +19,7 @@ figure {
   left: 0;
   right: 0;
   margin: 0 auto;
+  padding: 0 20px;
   background-color: white;
   border-bottom: 1px solid #ececec;
 }
@@ -26,19 +28,63 @@ figure {
   display: flex;
   align-items: center;
   height: 100%;
-  max-width: 900px;
+  max-width: 950px;
   margin: 0 auto;
-  .right {
-    margin-left: auto;
-    display: flex;
+
+  .left {
+    flex: 0.45;
+    a {
+      font-weight: bold;
+      font-size: 18px;
+      color: #8b00ff;
+    }
   }
 
-  .magnifier {
-    background: url("../../../images/magnifier.png");
-    @include header-icon();
+  .middle {
+    flex: 1;
+    position: relative;
+    max-width: 250px;
+    width: 100%;
+    padding-top: 28px;
+
+    input {
+      width: 100%;
+      height: 25px;
+    }
+
+    .magnifier {
+      background: url("../../../images/magnifier.png");
+      @include header-icon($medium-size);
+      position: relative;
+      top: -25px;
+      right: -90%;
+      cursor: pointer;
+    }
   }
-  .mailbox {
-    background: url("../../../images/mailbox.png");
-    @include header-icon();
+
+  .right {
+    display: flex;
+    margin-left: auto;
+
+    figure {
+      cursor: pointer;
+    }
+    figure + figure {
+      margin-left: 1.5rem;
+    }
+
+    .default-image {
+      background: url("../../../images/profile-default.png");
+      @include header-icon($large-size);
+    }
+
+    .mailbox {
+      background: url("../../../images/mailbox.png");
+      @include header-icon($large-size);
+    }
+  }
+
+  a + a {
+    margin-left: 1rem;
   }
 }

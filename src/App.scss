@@ -1,1 +1,10 @@
 @import "./scss/normalize.scss";
+
+a {
+  text-decoration: none;
+}
+
+button {
+  outline: none;
+  border: none;
+}
