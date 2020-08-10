@@ -7,6 +7,7 @@ import { rootSaga } from "./sagas";
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension"; // 리덕스 개발자 도구
 import createSagaMiddleware from "redux-saga";
+import { BrowserRouter as Router } from "react-router-dom";
 import Layout from "./components/Layout";
 
 const sagaMiddleWare = createSagaMiddleware(); // saga 미들웨어
@@ -22,9 +23,11 @@ sagaMiddleWare.run(rootSaga);
 
 ReactDOM.render(
   <Provider store={store}>
-    <Layout>
-      <App />
-    </Layout>
+    <Router>
+      <Layout>
+        <App />
+      </Layout>
+    </Router>
   </Provider>,
   document.getElementById("root")
 );
