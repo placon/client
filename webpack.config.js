@@ -15,8 +15,9 @@ module.exports = {
   output: {
     filename: "[name].js",
     path: path.resolve("./dist"),
+    // publicPath: "/",
   },
-  // publicPath: "/",
+
   module: {
     rules: [
       {
@@ -38,6 +39,7 @@ module.exports = {
         test: /\.(png|jpg|svg|gif)$/,
         loader: "url-loader",
         options: {
+          publicPath: "./dist/",
           name: "[name].[ext]?[hash]",
           limit: 10000, //10kb
         },
