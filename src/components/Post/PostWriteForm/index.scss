@@ -1,0 +1,29 @@
+.post-write-form {
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  h4 {
+    text-align: center;
+  }
+
+  .data-area {
+    display: flex;
+    max-width: 600px;
+    margin: 0 auto;
+
+    form {
+      width: 100%;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 350px;
+    }
+
+    .submit {
+      text-align: right;
+      margin-top: 25px;
+    }
+  }
+}
