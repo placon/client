@@ -1,0 +1,30 @@
+.post-form-container {
+  border: 1px solid gray;
+  max-width: 600px;
+  margin: 0 auto;
+
+  .profile {
+    padding: 10px;
+    height: 40px;
+  }
+
+  .content {
+    display: flex;
+    border: 1px solid green;
+
+    .text {
+      width: 80%;
+      padding: 10px;
+    }
+    .hashtag {
+      border: 1px dotted gray;
+      width: 20%;
+    }
+    &.image {
+      padding: 10px;
+    }
+  }
+  & + & {
+    margin-top: 50px;
+  }
+}
