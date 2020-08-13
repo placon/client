@@ -23,21 +23,67 @@ export const initialState = {
     loading: false,
     error: null,
   },
+  // 포스트 상세보기
+  selectedPost: {
+    post: null,
+    loading: false,
+    error: null,
+  },
 };
+
+// 포스트 리스트
+export const POST_LIST_REQUEST = "POST_LIST_REQUEST";
+export const POST_LIST_SUCCESS = "POST_LIST_SUCCESS";
+export const POST_LIST_FAILURE = "POST_LIST_FAILURE";
+
+export const postListRequest = (data) => ({
+  type: POST_LIST_REQUEST,
+  payload: data,
+});
+
+// 포스트 작성
+export const WRITE_POST_REQUEST = "WRITE_POST_REQUEST";
+export const WRITE_POST_SUCCESS = "WRITE_POST_SUCCESS";
+export const WRITE_POST_FAILURE = "WRITE_POST_FAILURE";
+
+export const writePostRequest = (data) => ({
+  type: WRITE_POST_REQUEST,
+  payload: data,
+});
+
+// 포스트 삭제
+export const DELETE_POST_REQUEST = "DELETE_POST_REQUEST";
+export const DELETE_POST_SUCCESS = "DELETE_POST_SUCCESS";
+export const DELETE_POST_FAILURE = "DELETE_POST_FAILURE";
+
+export const deletePostRequest = (data) => ({
+  type: DELETE_POST_REQUEST,
+  payload: data,
+});
+
+// 포스트 상세보기
+export const POST_DETAIL_REQUEST = "POST_DETAIL_REQUEST";
+export const POST_DETAIL_SUCCESS = "POST_DETAIL_SUCCESS";
+export const POST_DETAIL_FAILURE = "POST_DETAIL_FAILURE";
+
+export const postDetailRequest = (data) => ({
+  type: POST_DETAIL_REQUEST,
+  payload: data,
+});
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case NEW_POST_REQUEST:
+    case WRITE_POST_REQUEST:
       return {
         ...state,
         newPost: { ...state.newPost, loading: true },
       };
-    case NEW_POST_SUCCESS:
+    case WRITE_POST_SUCCESS:
       return {
         ...state,
         newPost: { post: action.payload, error: null, loading: false },
       };
-    case NEW_POST_FAILURE:
+    case WRITE_POST_FAILURE:
       return {
         ...state,
         newPost: { post: null, error: action.payload.error, loading: false },
@@ -61,7 +107,7 @@ export default function (state = initialState, action) {
           loading: false,
         },
       };
-    case DELTE_POST_FAILURE:
+    case DELETE_POST_FAILURE:
       return {
         ...state,
         deletedPost: {
