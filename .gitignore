@@ -1,6 +1,7 @@
 node_modules
 .sass-cache
 dist
+config/
 
 
 package-lock.json

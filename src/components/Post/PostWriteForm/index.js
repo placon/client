@@ -1,12 +1,21 @@
 import React, { useState } from "react";
 import "./index.scss";
 import Button from "../../UI/Button";
+import S3FileUpload from "react-s3";
+import amazonS3 from "../../../config/amazonS3";
 
 function PostWriteForm() {
+  const [images, setImages] = useState([]);
+
   const onChangeImages = (e) => {
-    const [images, setImages] = useState([]);
-    setImages(e.target.files);
-    console.log("파일 체크", e.target.files);
+    console.log("파일 체크", e.target.files[0]);
+    S3FileUpload.uploadFile(e.target.files[0], amazonS3)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
