@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import "./index.scss";
 import Button from "../../UI/Button";
 
 function PostWriteForm() {
+  const onChangeImages = (e) => {
+    const [images, setImages] = useState([]);
+    setImages(e.target.files);
+    console.log("파일 체크", e.target.files);
+  };
+
   return (
     <div className="post-write-form">
       <h4>포스트 작성</h4>
@@ -10,7 +16,8 @@ function PostWriteForm() {
         <form>
           <textarea />
           <div className="icon-list">
-            <span>이미지</span>
+            <input type="file" onChange={onChangeImages} />
+            이미지
             <span>해쉬태그</span>
           </div>
           <div className="submit">
