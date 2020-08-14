@@ -4,15 +4,14 @@ import axios from "axios";
 function postList(data) {
   console.log(data);
   return null;
-  // return axios.get("/api/posts/list")
+  // return axios.get("/api/posts/display/list")
   // 페이징이랑 정보 같이 보내야 될듯.
 }
 
 // 포스트 작성
 function writePost(data) {
-  console.log(data);
-  return null;
-  // return axios.post("/api/posts/write");
+  console.log("api data", data);
+  return axios.post("/api/posts/upload", data);
 }
 
 // 포스트 삭제
@@ -37,6 +36,7 @@ function seePostDetail(data) {
 }
 
 export default {
+  postList,
   writePost,
   deletePost,
   updatePost,

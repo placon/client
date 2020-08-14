@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PostWriteFormContainer from "../../../containers/Post/PostWriteFormContainer";
 
-function PostWritePage() {
+function PostWritePage(props) {
+  console.log("흠흠", props);
   return (
     <>
-      <PostWriteFormContainer />
+      <PostWriteFormContainer props={props} />
     </>
   );
 }

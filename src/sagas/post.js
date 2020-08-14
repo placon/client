@@ -11,11 +11,12 @@ import {
 import postApi from "../api/post";
 
 // 포스트 작성
-function* watchWriteNewPost() {
-  yield takeEvery(WRITE_POST_REQUEST, writeNewPost);
+function* watchWritePost() {
+  yield takeEvery(WRITE_POST_REQUEST, writePost);
 }
 
-function* writeNewPost(action) {
+function* writePost(action) {
+  console.log("포스트 작성 데이터 테스트", action.payload);
   try {
     const result = yield call(postApi.writePost, action.payload);
     console.log(result);
@@ -61,5 +62,5 @@ function* deletePost(action) {
 }
 
 export default function* postSaga() {
-  yield all([fork(watchWriteNewPost), fork(watchDeletePost)]);
+  yield all([fork(watchWritePost), fork(watchDeletePost)]);
 }
