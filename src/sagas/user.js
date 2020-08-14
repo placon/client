@@ -1,4 +1,11 @@
-import { all, call, fork, put, takeEvery } from "redux-saga/effects";
+import {
+  all,
+  call,
+  fork,
+  put,
+  takeEvery,
+  takeLatest,
+} from "redux-saga/effects";
 import {
   SIGN_UP_REQUEST,
   SIGN_UP_SUCCESS,
@@ -6,6 +13,9 @@ import {
   LOG_IN_SUCCESS,
   LOG_IN_FAILURE,
   LOG_IN_REQUEST,
+  LOG_OUT_REQUEST,
+  LOG_OUT_FAILURE,
+  LOG_OUT_SUCCESS,
 } from "../reducers/user";
 
 import UserApi from "../api/user";
@@ -34,13 +44,16 @@ function* watchSignup() {
 
 // 로그인
 function* login(action) {
-  console.log(action.data);
   try {
     var { data } = yield call(UserApi.requestLogin, action.payload);
     // console.log("로그인 찌겅보기", data);
     if (data.login_success) {
       var { data } = yield call(UserApi.requestAuth);
       console.log("인증 된건가?", data);
+    } else {
+      console.log(data.err);
+      alert(data.err);
+      return;
     }
     yield put({
       type: LOG_IN_SUCCESS,
@@ -50,7 +63,7 @@ function* login(action) {
   } catch (e) {
     yield put({
       type: LOG_IN_FAILURE,
-      errorReason: result.data.error,
+      errorReason: e,
     });
   }
 }
@@ -59,6 +72,29 @@ function* watchLogin() {
   yield takeEvery(LOG_IN_REQUEST, login);
 }
 
+function* logout(action) {
+  try {
+    var { data } = yield call(UserApi.requestLogout);
+    console.log("로그아웃 확인", data);
+    window.sessionStorage.removeItem("isLoggedIn");
+    window.sessionStorage.removeItem("myInfo");
+    yield put({
+      type: LOG_OUT_SUCCESS,
+    });
+    window.location.reload();
+  } catch (e) {
+    console.log(e);
+    yield put({
+      type: LOG_OUT_FAILURE,
+      error: data.err,
+    });
+  }
+}
+
+function* watchLogout() {
+  yield takeLatest(LOG_OUT_REQUEST, logout);
+}
+
 export default function* userSaga() {
-  yield all([fork(watchSignup), fork(watchLogin)]);
+  yield all([fork(watchSignup), fork(watchLogin), fork(watchLogout)]);
 }

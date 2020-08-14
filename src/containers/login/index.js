@@ -17,7 +17,6 @@ function LoginFormContainer() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // window.location.href = "/";
     const { email, password } = inputs;
     /**
      * ==== 추가사항 ====

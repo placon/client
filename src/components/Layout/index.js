@@ -9,6 +9,7 @@ function index({ children }) {
   useEffect(() => {
     const myInfo = JSON.parse(window.sessionStorage.getItem("myInfo"));
     const isLoggedIn = window.sessionStorage.getItem("isLoggedIn");
+
     if (isLoggedIn && myInfo) {
       setLogin(true);
       setUserInfo(myInfo);

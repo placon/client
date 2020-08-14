@@ -21,9 +21,15 @@ function requestAuth() {
   return axios.get("/api/users/auth");
 }
 
+// 로그아웃
+function requestLogout() {
+  return axios.get("/api/users/logout");
+}
+
 export default {
   requestSignup,
   requestCheckEmailDuplication,
   requestLogin,
   requestAuth,
+  requestLogout,
 };

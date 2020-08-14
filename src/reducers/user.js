@@ -36,6 +36,10 @@ export const LOG_OUT_REQUEST = "LOG_OUT_REQUEST";
 export const LOG_OUT_SUCCESS = "LOG_OUT_SUCCESS";
 export const LOG_OUT_FAILURE = "LOG_OUT_FAILURE";
 
+export const logoutRequest = () => ({
+  type: LOG_OUT_REQUEST,
+});
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case SIGN_UP_REQUEST:
@@ -76,6 +80,21 @@ export default (state = initialState, action) => {
     case LOG_IN_FAILURE:
       return {
         ...state,
+      };
+    case LOG_OUT_REQUEST:
+      return {
+        ...state,
+        isLoggingOut: true,
+      };
+    case LOG_OUT_SUCCESS:
+      return {
+        ...state,
+        isLoggingOut: false,
+      };
+    case LOG_OUT_FAILURE:
+      return {
+        ...state,
+        isLoggingOut: false,
       };
 
     default:

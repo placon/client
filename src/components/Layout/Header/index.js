@@ -1,15 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./index.scss";
 import { Link } from "react-router-dom";
 import useInput from "../../../lib/hooks/useInput";
 import Button from "../../UI/Button";
+import { logoutRequest } from "../../../reducers/user";
+import { useDispatch } from "react-redux";
 
 function index({ login, userInfo }) {
+  const dispatch = useDispatch();
   const [searchKeyword, onChangeSearchKeyword] = useInput("");
 
   const onSubmit = (e) => {
     e.preventDefault();
     console.log("키워드 : ", searchKeyword);
+  };
+  const onLogout = () => {
+    dispatch(logoutRequest());
   };
 
   return (
@@ -36,6 +42,9 @@ function index({ login, userInfo }) {
                   !userInfo.profile_image && "default-image"
                 }`}
               ></figure>
+              <Button size="small" onClick={onLogout}>
+                로그아웃
+              </Button>
             </>
           ) : (
             <>
