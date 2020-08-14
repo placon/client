@@ -16,7 +16,7 @@ export default function (Componet, option, adminRoute = null) {
       }
     }, []);
 
-    return <Componet />;
+    return <Componet {...props} />;
   }
 
   return AuthCheck;
