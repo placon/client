@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import LoginForm from "../../components/Login";
 import { useDispatch, useSelector } from "react-redux";
 import { loginRequest } from "../../reducers/user";
 
 function LoginFormContainer() {
   const dispatch = useDispatch();
+  const { isLoggedIn, myInfo } = useSelector((state) => state.user);
+  useEffect(() => {
+    if (isLoggedIn) {
+      console.log("로그인 성공");
+      window.sessionStorage.setItem("myInfo", JSON.stringify(myInfo));
+      window.sessionStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
+      window.location.href = "/";
+    }
+  }, [isLoggedIn]);
 
   const onSubmit = (e) => {
     e.preventDefault();

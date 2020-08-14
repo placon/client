@@ -1,14 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./index.scss";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import useInput from "../../../lib/hooks/useInput";
 import Button from "../../UI/Button";
 
-function index() {
-  const { isLoggedIn, myInfo } = useSelector((state) => state.user); // 로그인 되어있는지 체크
-  // const isLoggedIn = true;
-  // const myInfo = true;
+function index({ login, userInfo }) {
   const [searchKeyword, onChangeSearchKeyword] = useInput("");
 
   const onSubmit = (e) => {
@@ -32,12 +28,12 @@ function index() {
           <button className="magnifier" type="submit"></button>
         </form>
         <div className="right">
-          {isLoggedIn && myInfo ? (
+          {login ? (
             <>
               <figure className="mailbox"></figure>
               <figure
                 className={`profile ${
-                  !myInfo.profile_image && "default-image"
+                  !userInfo.profile_image && "default-image"
                 }`}
               ></figure>
             </>
