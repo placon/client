@@ -4,11 +4,10 @@ import useInput from "../../../lib/hooks/useInput";
 import { useDispatch, useSelector } from "react-redux";
 import { writePostRequest } from "../../../reducers/post";
 
-function PostWriteFormContainer(props) {
+function PostWriteFormContainer() {
   const [content, onChangeContent] = useInput("");
   const dispatch = useDispatch();
   const { newPost } = useSelector((state) => state.post);
-  console.log(props);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -26,7 +25,7 @@ function PostWriteFormContainer(props) {
   useEffect(() => {
     if (newPost.post) {
       alert("포스트가 성공적으로 등록되었습니다.");
-      props.history.push("/");
+      location.href = "/";
     }
   }, [newPost]);
 

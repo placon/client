@@ -1,9 +1,11 @@
 export const initialState = {
   // 포스트 리스트
-  postLists: {
+  hasMorePost: true,
+  postList: {
     posts: [],
     loading: false,
     error: null,
+    page_index: 0,
   },
   // 포스트 작성
   newPost: {
@@ -61,6 +63,16 @@ export const deletePostRequest = (data) => ({
   payload: data,
 });
 
+// 포스트 수정
+export const UPDATE_POST_REQUEST = "UPDATE_POST_REQUEST";
+export const UPDATE_POST_SUCCESS = "UPDATE_POST_SUCCESS";
+export const UPDATE_POST_FAILURE = "UPDATE_POST_FAILURE";
+
+export const updatePostRequest = (data) => ({
+  type: UPDATE_POST_REQUEST,
+  payload: data,
+});
+
 // 포스트 상세보기
 export const POST_DETAIL_REQUEST = "POST_DETAIL_REQUEST";
 export const POST_DETAIL_SUCCESS = "POST_DETAIL_SUCCESS";
@@ -73,6 +85,32 @@ export const postDetailRequest = (data) => ({
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case POST_LIST_REQUEST:
+      return {
+        ...state,
+        postList: {
+          ...state.postList,
+          loading: true,
+          error: null,
+        },
+      };
+    case POST_LIST_SUCCESS:
+      return {
+        ...state,
+        hasMorePost: action.payload.post_list.length == 5 ? true : false,
+        postList: {
+          ...state.postList,
+          loading: false,
+          error: null,
+          posts: state.postList.posts.concat(action.payload.post_list),
+        },
+      };
+    case POST_LIST_FAILURE:
+      return {
+        ...state,
+        postList: { post: null, error: action.payload, loading: false },
+      };
+
     case WRITE_POST_REQUEST:
       return {
         ...state,

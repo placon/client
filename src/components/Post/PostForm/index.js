@@ -1,23 +1,47 @@
 import React from "react";
 import "./index.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { deletePostRequest, updatePostRequest } from "../../../reducers/post";
+import Button from "../../ui/Button";
 
 function PostForm(props) {
-  // const {userInfo, content, images, hashtags, like} = props;
+  const { postId, content, postImages, hashtags, isMyPost = true } = props;
+  const dispatch = useDispatch();
+
+  // 포스트 삭제
+  const onRemovePost = () => {
+    dispatch(
+      deletePostRequest({
+        postId,
+      })
+    );
+  };
+
+  // 포스트 수정
+  const onUpdatePost = () => {
+    dispatch(
+      updatePostRequest({
+        postId,
+      })
+    );
+  };
 
   return (
     <div className="post-form-container">
-      <div className="profile">여기에 사용자 정보</div>
+      <div className="profile">
+        여기에 사용자 정보
+        {isMyPost && (
+          <button size="small" onClick={onRemovePost}>
+            삭제
+          </button>
+        )}
+      </div>
       <div className="content">
-        <div className="text">
-          여기에 내용이 입력된다.여기에 내용이 입력된다.여기에 내용이
-          입력된다.여기에 내용이 입력된다.여기에 내용이 입력된다.여기에 내용이
-          입력된다.
-        </div>
+        <div className="text">{content}</div>
         <div className="hashtag">
           <ul className="hashtag-list">
-            <li>#일상회화</li>
-            <li>#맞춤법</li>
-            <li>#존댓말</li>
+            {hashtags &&
+              hashtags.map((hashtag, idx) => <li key={idx}>#{hashtag}</li>)}
           </ul>
         </div>
       </div>

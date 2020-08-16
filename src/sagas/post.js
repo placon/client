@@ -6,9 +6,38 @@ import {
   DELETE_POST_REQUEST,
   DELETE_POST_SUCCESS,
   DELETE_POST_FAILURE,
+  POST_LIST_REQUEST,
+  POST_LIST_SUCCESS,
+  POST_LIST_FAILURE,
 } from "../reducers/post";
 
 import postApi from "../api/post";
+
+// 학습 언어 포스트 리스트
+function* watchPostList() {
+  yield takeEvery(POST_LIST_REQUEST, postList);
+}
+
+function* postList(action) {
+  // console.log("사가에서 payload 테스트", action.payload);
+  try {
+    const { data } = yield call(postApi.postList, action.payload);
+    console.log("결과확인", data);
+    if (data && data.display_postList_lang_success) {
+      yield put({
+        type: POST_LIST_SUCCESS,
+        payload: data,
+      });
+    } else {
+      yield put({
+        type: POST_LIST_FAILURE,
+        payload: data.note,
+      });
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
 
 // 포스트 작성
 function* watchWritePost() {
@@ -62,5 +91,5 @@ function* deletePost(action) {
 }
 
 export default function* postSaga() {
-  yield all([fork(watchWritePost), fork(watchDeletePost)]);
+  yield all([fork(watchWritePost), fork(watchDeletePost), fork(watchPostList)]);
 }

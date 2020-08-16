@@ -1,12 +1,30 @@
 import axios from "axios";
 
-// 포스트 리스트
+// 학습 언어 포스트 리스트 조회
 function postList(data) {
-  console.log(data);
-  return null;
-  // return axios.get("/api/posts/display/list")
-  // 페이징이랑 정보 같이 보내야 될듯.
+  // console.log("api 파일에서 체크 ", data);
+  const page_size = data.page_size;
+  const page_index = data.page_index;
+  const native_language = data.native_language;
+  const target_language = data.target_language;
+
+  return axios.get(
+    `/api/posts/display/list/lang/${native_language}/${target_language}/${page_index}/${page_size}`
+  );
 }
+
+// 특정 사용자의 포스트 리스트 조회
+function userPostList(data) {
+  const user_id = data.user_id;
+  const page_size = data.page_size;
+  const page_index = data.page_index;
+
+  return axios.get(
+    `/api/posts/display/user/${user_id}/${page_index}/${page_size}`
+  );
+}
+
+// 언어별 포스트 리스트
 
 // 포스트 작성
 function writePost(data) {
@@ -15,10 +33,10 @@ function writePost(data) {
 }
 
 // 포스트 삭제
-function deletePost(data) {
-  console.log(data);
+function deletePost(postId) {
+  console.log("api 파일에서 찍어보기", postId);
   return null;
-  // return axios.delete("/api/posts/delete");
+  // return axios.delete(`/api/posts/delete/${data.postId}`);
 }
 
 // 포스트 수정
@@ -37,6 +55,7 @@ function seePostDetail(data) {
 
 export default {
   postList,
+  userPostList,
   writePost,
   deletePost,
   updatePost,
