@@ -7,6 +7,8 @@ import { deletePostRequest, updatePostRequest } from "../../../reducers/post";
 
 function PostList() {
   const dispatch = useDispatch();
+  const { deletedPost, updatedPost } = useSelector((state) => state.post);
+
   const [pageIndex, setPageIndex] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [list, setList] = useState([]);
@@ -42,7 +44,7 @@ function PostList() {
       }
     };
     loadMorePosts();
-  }, [pageIndex]);
+  }, [pageIndex, deletedPost, updatedPost]);
 
   useEffect(() => {
     setMyId(JSON.parse(window.sessionStorage.getItem("myInfo")));
@@ -59,6 +61,7 @@ function PostList() {
         postId,
       })
     );
+    setList(list.filter((post) => post._id !== postId));
   };
 
   // 포스트 수정
