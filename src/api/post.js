@@ -38,10 +38,10 @@ function writePost(data) {
 }
 
 // 포스트 삭제
-function deletePost(postId) {
+function deletePost({ postId }) {
   console.log("api 파일에서 찍어보기", postId);
-  return null;
-  // return axios.delete(`/api/posts/delete/${data.postId}`);
+  // return null;
+  return axios.get(`/api/posts/delete/${postId}`);
 }
 
 // 포스트 수정

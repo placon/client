@@ -1,36 +1,28 @@
 import React from "react";
 import "./index.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { deletePostRequest, updatePostRequest } from "../../../reducers/post";
 
 function PostForm(props) {
-  const { postId, content, postImages, hashtags, isMyPost = true } = props;
-  const dispatch = useDispatch();
-
-  // 포스트 삭제
-  const onRemovePost = () => {
-    dispatch(
-      deletePostRequest({
-        postId,
-      })
-    );
-  };
-
-  // 포스트 수정
-  const onUpdatePost = () => {
-    dispatch(
-      updatePostRequest({
-        postId,
-      })
-    );
-  };
+  const {
+    postId,
+    content,
+    postImages,
+    hashtags,
+    isMyPost = true,
+    onDeletePost,
+    onUpdatePost,
+  } = props;
 
   return (
     <div className="post-form-container">
       <div className="profile">
         여기에 사용자 정보
         {isMyPost && (
-          <button size="small" onClick={onRemovePost}>
+          <button
+            size="small"
+            onClick={() => {
+              onDeletePost(postId);
+            }}
+          >
             삭제
           </button>
         )}

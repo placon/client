@@ -73,19 +73,21 @@ function* watchDeletePost() {
 function* deletePost(action) {
   try {
     const result = yield call(postApi.deletePost, action.payload);
-    console.log(result);
+    console.log("삭제 결과는?", result);
     // 성공이면
     if (result) {
+      console.log("성공");
       yield put({
         type: DELETE_POST_SUCCESS,
         payload: result.data,
       });
+      alert("포스트가 성공적으로 삭제되었습니다.");
     }
   } catch (e) {
     console.log(e);
     yield put({
       type: DELETE_POST_FAILURE,
-      payload: result.data,
+      payload: result,
     });
   }
 }
