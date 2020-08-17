@@ -1,17 +1,22 @@
 import axios from "axios";
 
 // 학습 언어 포스트 리스트 조회
-function postList(data) {
-  // console.log("api 파일에서 체크 ", data);
-  const page_size = data.page_size;
-  const page_index = data.page_index;
-  const native_language = data.native_language;
-  const target_language = data.target_language;
-
-  return axios.get(
+const postList = async (sendingData) => {
+  // console.log("api 파일에서 체크 ", sendingData);
+  const page_size = sendingData.page_size;
+  const page_index = sendingData.page_index;
+  const native_language = sendingData.native_language;
+  const target_language = sendingData.target_language;
+  const { data } = await axios.get(
     `/api/posts/display/list/lang/${native_language}/${target_language}/${page_index}/${page_size}`
   );
-}
+
+  return data;
+
+  // return axios.get(
+  //   `/api/posts/display/list/lang/${native_language}/${target_language}/${page_index}/${page_size}`
+  // );
+};
 
 // 특정 사용자의 포스트 리스트 조회
 function userPostList(data) {

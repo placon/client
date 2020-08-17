@@ -2,7 +2,6 @@ import React from "react";
 import "./index.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { deletePostRequest, updatePostRequest } from "../../../reducers/post";
-import Button from "../../ui/Button";
 
 function PostForm(props) {
   const { postId, content, postImages, hashtags, isMyPost = true } = props;

@@ -1,8 +1,14 @@
-import React from "react";
-import HomeContainer from "../../containers/home";
+import React, { useEffect, useCallback } from "react";
+import PostList from "../../components/Post/PostList";
+import Home from "../../components/home";
 
 function HomePage() {
-  return <HomeContainer />;
+  return (
+    <>
+      <Home />
+      <PostList />
+    </>
+  );
 }
 
 export default HomePage;

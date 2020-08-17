@@ -10,6 +10,7 @@ function PostWriteForm(props) {
 
   const onChangeImages = (e) => {
     console.log("파일 체크", e.target.files[0]);
+
     S3FileUpload.uploadFile(e.target.files[0], amazonS3)
       .then((data) => {
         console.log(data);

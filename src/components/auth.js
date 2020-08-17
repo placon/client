@@ -12,7 +12,7 @@ export default function (Componet, option, adminRoute = null) {
       if (isLoggedIn && !option) {
         props.history.push("/");
       } else if (!isLoggedIn && option) {
-        props.history.push("login");
+        props.history.push("/login");
       }
     }, []);
 
