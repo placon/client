@@ -11,6 +11,37 @@
 
   .post-write-modal {
     background: white;
+    padding: 15px;
+    width: 100%;
+    max-width: 700px;
+    min-width: 300px;
+    max-height: 700px;
+    overflow: scroll;
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 0 5px;
+
+      // h4 {
+      //   width: 95%;
+      // }
+
+      .close-button {
+        cursor: pointer;
+        position: absolute;
+        right: 5px;
+        width: 20px;
+        height: 20px;
+        // margin-left: auto;
+        img {
+          width: 100%;
+        }
+      }
+    }
+
     ul {
       list-style: none;
       padding: 0;
@@ -25,6 +56,28 @@
       margin: 0 auto;
       padding: 0 10px;
 
+      .image-list {
+        padding-bottom: 20px;
+        display: flex;
+        flex-wrap: wrap;
+
+        .image-wrapper {
+          border: 1px solid gray;
+          text-align: center;
+          margin-right: 10px;
+        }
+
+        .image-item {
+          img {
+            width: 100px;
+            height: 115px;
+          }
+        }
+        .image-item + .image-item {
+          margin-left: 20px;
+        }
+      }
+
       form {
         width: 100%;
       }
@@ -32,6 +85,25 @@
       textarea {
         width: 100%;
         min-height: 350px;
+      }
+
+      .inputfile {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        // position: absolute;
+        z-index: -1;
+      }
+
+      // .inputfile +
+      label {
+        cursor: pointer;
+        font-size: 1.25em;
+        font-weight: 700;
+        color: white;
+        background-color: black;
+        display: inline-block;
       }
 
       .submit {

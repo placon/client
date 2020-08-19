@@ -17,7 +17,7 @@ function PostList() {
   const handleScroll = () => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
 
-    if (Math.floor(scrollHeight - scrollTop) === clientHeight) {
+    if (Math.floor(scrollHeight - scrollTop) <= clientHeight + 0) {
       setPageIndex((prevPage) => prevPage + 1);
     }
   };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PostList from "../../components/Post/PostList";
-import PostWriteFormModal from "../../components/Post/PostFormModal";
+import PostWriteFormModal from "../../components/Post/PostWriteFormModal";
 import { useDispatch, useSelector } from "react-redux";
 import useInput from "../../lib/hooks/useInput";
 import { writePostRequest } from "../../reducers/post";
@@ -46,15 +46,15 @@ function HomePage() {
               포스트 작성
             </button>
           </div>
-          {showWriteModal ? (
+          {showWriteModal && (
             <PostWriteFormModal
               content={content}
               onChangeContent={onChangeContent}
               onSubmit={onSubmit}
+              setShowWriteModal={setShowWriteModal}
             />
-          ) : (
-            <PostList />
           )}
+          <PostList />)
         </>
       )}
     </>
