@@ -22,6 +22,7 @@ function* postList(action) {
   // console.log("사가에서 payload 테스트", action.payload);
   try {
     const { data } = yield call(postApi.postList, action.payload);
+
     console.log("결과확인", data);
     if (data && data.display_postList_lang_success) {
       yield put({
@@ -55,6 +56,7 @@ function* writePost(action) {
         type: WRITE_POST_SUCCESS,
         payload: result.data,
       });
+      alert("포스트가 성공적으로 등록되었습니다.");
     }
   } catch (e) {
     console.log(e);
