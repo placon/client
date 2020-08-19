@@ -17,7 +17,7 @@ function PostList() {
   const handleScroll = () => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
 
-    if (scrollHeight - scrollTop === clientHeight) {
+    if (Math.floor(scrollHeight - scrollTop) === clientHeight) {
       setPageIndex((prevPage) => prevPage + 1);
     }
   };
@@ -35,10 +35,10 @@ function PostList() {
         target_language: "EN",
       };
       const result = await postApi.postList(sendingData);
+      console.log(result.display_info);
       if (result) {
-        console.log(result.post_list);
-        setList((prev) => [...prev, ...result.post_list]);
-        if (result.post_list.length < page_size) {
+        setList((prev) => [...prev, ...result.display_info]);
+        if (result.display_info.length < page_size) {
           setHasMore(false);
         }
       }
@@ -77,9 +77,9 @@ function PostList() {
     <>
       <div>
         {list &&
-          list.map((post) => (
+          list.map((post, idx) => (
             <Post
-              key={post._id}
+              key={idx}
               postId={post._id}
               hashtags={post.hashtags}
               postImages={post.post_images}

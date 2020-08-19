@@ -5,7 +5,6 @@ import Auth from "./components/auth";
 import SignupPage from "./pages/signup/SignupPage";
 import LoginPage from "./pages/login/LoginPage";
 import HomePage from "./pages/home/HomePage";
-import PostWritePage from "./pages/post/postWrite/PostWritePage";
 
 function App() {
   return (
@@ -14,7 +13,6 @@ function App() {
         <Route exact path="/" component={Auth(HomePage, true)} />
         <Route exact path="/signup" component={Auth(SignupPage, false)} />
         <Route exact path="/login" component={Auth(LoginPage, false)} />
-        <Route exact path="/postWrite" component={Auth(PostWritePage, true)} />
       </Switch>
     </>
   );
