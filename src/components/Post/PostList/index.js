@@ -80,10 +80,11 @@ function PostList() {
           list.map((post, idx) => (
             <Post
               key={idx}
-              postId={post._id}
-              hashtags={post.hashtags}
-              postImages={post.post_images}
-              content={post.post_context}
+              postData={post}
+              // postId={post._id}
+              // hashtags={post.hashtags}
+              // postImages={post.post_images}
+              // content={post.post_context}
               onDeletePost={onDeletePost}
               onUpdatePost={onUpdatePost}
               // isMyPost={post.user_id === myId}

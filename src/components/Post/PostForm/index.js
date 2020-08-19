@@ -2,15 +2,19 @@ import React from "react";
 import "./index.scss";
 
 function PostForm(props) {
+  const { postData, isMyPost = true, onDeletePost, onUpdatePost } = props;
   const {
-    postId,
-    content,
-    postImages,
+    _id,
     hashtags,
-    isMyPost = true,
-    onDeletePost,
-    onUpdatePost,
-  } = props;
+    name,
+    natvie_language,
+    post_context,
+    post_images,
+    profile_image,
+    profile_text,
+    target_language,
+    user_id,
+  } = postData;
 
   return (
     <div className="post-form-container">
@@ -28,7 +32,7 @@ function PostForm(props) {
         )}
       </div>
       <div className="content">
-        <div className="text">{content}</div>
+        <div className="text">{post_context}</div>
         <div className="hashtag">
           <ul className="hashtag-list">
             {hashtags &&
