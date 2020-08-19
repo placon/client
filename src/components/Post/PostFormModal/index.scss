@@ -1,0 +1,43 @@
+.postFormModalWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba($color: #000000, $alpha: 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .post-write-modal {
+    background: white;
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    h4 {
+      text-align: center;
+    }
+
+    .data-area {
+      display: flex;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 10px;
+
+      form {
+        width: 100%;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 350px;
+      }
+
+      .submit {
+        text-align: right;
+        margin-top: 25px;
+      }
+    }
+  }
+}
