@@ -8,9 +8,13 @@ import { writePostRequest } from "../../reducers/post";
 function HomePage() {
   const [showWriteModal, setShowWriteModal] = useState(false);
   const [userInfo, setUserInfo] = useState();
-  const [content, onChangeContent] = useInput("");
+  const [content, setContent] = useState("");
   const dispatch = useDispatch();
   const { newPost } = useSelector((state) => state.post);
+
+  const onChangeContent = (e) => {
+    setContent(e.target.value);
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -50,6 +54,7 @@ function HomePage() {
             <PostWriteFormModal
               userInfo={userInfo}
               content={content}
+              setContent={setContent}
               onChangeContent={onChangeContent}
               onSubmit={onSubmit}
               setShowWriteModal={setShowWriteModal}
