@@ -1,5 +1,6 @@
 import React from "react";
 import "./index.scss";
+import Button from "../../ui/Button";
 
 function PostForm(props) {
   const { postData, isMyPost = true, onDeletePost, onUpdatePost } = props;
@@ -21,14 +22,14 @@ function PostForm(props) {
       <div className="profile">
         여기에 사용자 정보
         {isMyPost && (
-          <button
+          <Button
             size="small"
             onClick={() => {
               onDeletePost(postId);
             }}
           >
             삭제
-          </button>
+          </Button>
         )}
       </div>
       <div className="content">

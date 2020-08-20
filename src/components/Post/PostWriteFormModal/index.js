@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./index.scss";
-import Button from "../../UI/Button";
+import Button from "../../ui/Button";
 import S3FileUpload from "react-s3";
 import amazonS3 from "../../../config/amazonS3";
 import { amazonS3Url } from "../../../config/config";

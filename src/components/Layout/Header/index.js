@@ -2,7 +2,7 @@ import React from "react";
 import "./index.scss";
 import { Link } from "react-router-dom";
 import useInput from "../../../lib/hooks/useInput";
-import Button from "../../UI/Button";
+import Button from "../../ui/Button";
 import { logoutRequest } from "../../../reducers/user";
 import { useDispatch } from "react-redux";
 

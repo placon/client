@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import PostList from "../../components/Post/PostList";
 import PostWriteFormModal from "../../components/Post/PostWriteFormModal";
 import { useDispatch, useSelector } from "react-redux";
-import useInput from "../../lib/hooks/useInput";
 import { writePostRequest } from "../../reducers/post";
 
 function HomePage() {

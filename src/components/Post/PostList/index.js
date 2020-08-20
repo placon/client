@@ -4,6 +4,7 @@ import Post from "../PostForm";
 import { useDispatch, useSelector } from "react-redux";
 import postApi from "../../../api/post";
 import { deletePostRequest, updatePostRequest } from "../../../reducers/post";
+import Button from "../../ui/Button";
 
 function PostList() {
   const dispatch = useDispatch();
@@ -81,13 +82,8 @@ function PostList() {
             <Post
               key={idx}
               postData={post}
-              // postId={post._id}
-              // hashtags={post.hashtags}
-              // postImages={post.post_images}
-              // content={post.post_context}
               onDeletePost={onDeletePost}
               onUpdatePost={onUpdatePost}
-              // isMyPost={post.user_id === myId}
             />
           ))}
       </div>
