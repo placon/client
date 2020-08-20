@@ -4,24 +4,41 @@ import Button from "../../UI/Button";
 import S3FileUpload from "react-s3";
 import amazonS3 from "../../../config/amazonS3";
 import { amazonS3Url } from "../../../config/config";
+import ChangeFileName from "../../../utils/changeFileName";
 
 function PostWriteFormModal(props) {
   const [images, setImages] = useState([]);
-  const { content, onChangeContent, onSubmit, setShowWriteModal } = props;
+  const {
+    userInfo,
+    content,
+    onChangeContent,
+    onSubmit,
+    setShowWriteModal,
+  } = props;
+
+  const onRemoveImage = (key, name) => {
+    amazonS3.dirName = `placon/user/${userInfo._id}`;
+    S3FileUpload.deleteFile(name, amazonS3);
+    setImages((prev) => prev.filter((img) => img.key !== key));
+  };
 
   const onChangeImages = (e) => {
     if (!e.target.files || e.target.files.length === 0) {
       return;
     }
+    const originFile = e.target.files[0];
+    const newFileName = ChangeFileName(originFile.name);
+    const newPostFile = new File([originFile], newFileName, {
+      type: originFile.type,
+    });
 
-    console.log("파일 체크", e.target.files[0]);
-    amazonS3.dirName = "placon";
+    amazonS3.dirName = `placon/user/${userInfo._id}`;
 
-    S3FileUpload.uploadFile(e.target.files[0], amazonS3)
+    S3FileUpload.uploadFile(newPostFile, amazonS3)
       .then((data) => {
-        console.log(data);
         var uploadResult = {
           key: data.key,
+          name: newFileName,
           location: data.location,
         };
         setImages((prev) => [...prev, uploadResult]);
@@ -52,7 +69,13 @@ function PostWriteFormModal(props) {
             <div className="image-list">
               {images &&
                 images.map((image, idx) => (
-                  <span className="image-wrapper" key={idx}>
+                  <span
+                    className="image-wrapper"
+                    key={idx}
+                    onClick={() => {
+                      onRemoveImage(image.key, image.name);
+                    }}
+                  >
                     <div className="image-item">
                       <img src={image.location} />
                     </div>

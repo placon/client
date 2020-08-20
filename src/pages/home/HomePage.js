@@ -48,6 +48,7 @@ function HomePage() {
           </div>
           {showWriteModal && (
             <PostWriteFormModal
+              userInfo={userInfo}
               content={content}
               onChangeContent={onChangeContent}
               onSubmit={onSubmit}
