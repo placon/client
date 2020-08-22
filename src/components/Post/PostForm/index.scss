@@ -5,7 +5,42 @@
 
   .profile {
     padding: 10px;
-    height: 40px;
+    min-height: 60px;
+    display: flex;
+    .profile-image {
+      width: 60px;
+    }
+    .info {
+      width: 100%;
+      display: flex;
+      margin-left: 10px;
+
+      h4 {
+        margin: 0;
+        margin-bottom: 10px;
+      }
+
+      .info-button {
+        margin-left: auto;
+
+        button {
+          width: 35px;
+          height: 35px;
+          cursor: pointer;
+          outline: none;
+          background: white;
+          border-radius: 50%;
+          &:hover {
+            background-color: #f2f2f2;
+          }
+        }
+
+        img {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
   }
 
   .content {

@@ -1,14 +1,18 @@
 import React from "react";
 import "./index.scss";
 import Button from "../../ui/Button";
+import ProfileImage from "../../ui/ProfileImage";
+import { amazonS3Url } from "../../../config/config";
+import { Link } from "react-router-dom";
 
 function PostForm(props) {
-  const { postData, isMyPost = true, onDeletePost, onUpdatePost } = props;
+  const { postData, isMyPost, onDeletePost, onUpdatePost } = props;
   const {
     _id,
+    email,
     hashtags,
     name,
-    natvie_language,
+    native_language,
     post_context,
     post_images,
     profile_image,
@@ -20,17 +24,43 @@ function PostForm(props) {
   return (
     <div className="post-form-container">
       <div className="profile">
-        여기에 사용자 정보
-        {isMyPost && (
-          <Button
-            size="small"
-            onClick={() => {
-              onDeletePost(postId);
-            }}
-          >
-            삭제
-          </Button>
-        )}
+        <Link to={{ pathname: "/profile", state: { email: email } }}>
+          <div className="profile-image">
+            <ProfileImage
+              size="medium"
+              imageUrl={
+                !profile_image
+                  ? `${amazonS3Url}/profile-default.png`
+                  : `${amazonS3Url}/user/${user_id}/${profile_image}`
+              }
+            />
+          </div>
+        </Link>
+        <div className="info">
+          <div className="info-data">
+            <h4>{name}</h4>
+            <span>
+              {native_language} {"->"} {target_language}
+            </span>
+          </div>
+          <div className="info-button">
+            <button>
+              <img src={`${amazonS3Url}/post-hamburger.svg`} />
+            </button>
+          </div>
+          <span>
+            {isMyPost && (
+              <Button
+                size="small"
+                onClick={() => {
+                  onDeletePost(postId);
+                }}
+              >
+                삭제
+              </Button>
+            )}
+          </span>
+        </div>
       </div>
       <div className="content">
         <div className="text">{post_context}</div>

@@ -48,7 +48,8 @@ function PostList() {
   }, [pageIndex, deletedPost, updatedPost]);
 
   useEffect(() => {
-    setMyId(JSON.parse(window.sessionStorage.getItem("myInfo")));
+    let id = JSON.parse(window.sessionStorage.getItem("myInfo"))._id;
+    setMyId(id);
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -84,6 +85,7 @@ function PostList() {
               postData={post}
               onDeletePost={onDeletePost}
               onUpdatePost={onUpdatePost}
+              isMyPost={post.user_id === myId}
             />
           ))}
       </div>
