@@ -6,11 +6,13 @@ import SignupPage from "./pages/signup/SignupPage";
 import LoginPage from "./pages/login/LoginPage";
 import HomePage from "./pages/home/HomePage";
 import ProfilePage from "./pages/profile/ProfilePage";
+import TestPage from "./pages/TestPage";
 
 function App() {
   return (
     <>
       <Switch>
+        <Route exact path="/test" component={TestPage} />
         <Route exact path="/" component={Auth(HomePage, true)} />
         <Route exact path="/signup" component={Auth(SignupPage, false)} />
         <Route exact path="/login" component={Auth(LoginPage, false)} />

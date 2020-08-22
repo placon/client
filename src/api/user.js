@@ -26,10 +26,16 @@ function requestLogout() {
   return axios.get("/api/users/logout");
 }
 
+// 유저 정보 조회
+function requestUserInfo({ user_email }) {
+  return axios.get(`/api/users/display/${user_email}`);
+}
+
 export default {
   requestSignup,
   requestCheckEmailDuplication,
   requestLogin,
   requestAuth,
   requestLogout,
+  requestUserInfo,
 };
