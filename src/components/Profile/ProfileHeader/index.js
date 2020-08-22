@@ -2,43 +2,63 @@ import React from "react";
 import "./index.scss";
 import ProfileImage from "../../ui/ProfileImage";
 import Button from "../../ui/Button";
+import { amazonS3Url } from "../../../config/config";
 
 function ProfileBox(props) {
-  const { userInfo, setShowImageModal } = props;
+  const { userInfo, setShowImageModal, isMe } = props;
+
   return (
-    <div>
-      <div className="profile-box">
-        <section className="image-section">
-          <ProfileImage
-            onClick={() => {
-              setShowImageModal(true);
-            }}
-            imageUrl={
-              "https://placon-photo-bucket.s3.ap-northeast-2.amazonaws.com/placon/avatar.jpg"
-            }
-          />
-        </section>
-        <section className="info-section">
-          <div className="row">
-            <h3>JUNGWON</h3>
-            <Button size="small" outline>
-              프로필 편집
-            </Button>
+    <>
+      {userInfo && (
+        <div>
+          <div className="profile-box">
+            <section className="image-section">
+              <ProfileImage
+                isMe={isMe}
+                onClick={() => {
+                  if (isMe) {
+                    setShowImageModal(true);
+                  } else {
+                    return;
+                  }
+                }}
+                imageUrl={
+                  !userInfo.profile_image
+                    ? `${amazonS3Url}/profile-default.png`
+                    : `${amazonS3Url}/user/${userInfo._id}/${userInfo.profile_image}`
+                }
+              />
+            </section>
+            <section className="info-section">
+              <div className="row">
+                <h3>{userInfo.name}</h3>
+                {isMe && (
+                  <Button size="small" outline>
+                    프로필 편집
+                  </Button>
+                )}
+              </div>
+              <div className="row">
+                <span>
+                  {userInfo.native_language} {"->"} {userInfo.target_language}
+                </span>
+              </div>
+              <div className="row">
+                <ul>
+                  <li>
+                    <span>게시물 3</span>
+                  </li>
+                  <li>
+                    <span>첨삭 47</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="row">33333</div>
+            </section>
           </div>
-          <div className="row">
-            <ul>
-              <li>
-                <span>게시물 3</span>
-              </li>
-              <li>
-                <span>첨삭 47</span>
-              </li>
-            </ul>
-          </div>
-          <div className="row">33333</div>
-        </section>
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 }
 

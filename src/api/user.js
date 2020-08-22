@@ -27,8 +27,19 @@ function requestLogout() {
 }
 
 // 유저 정보 조회
-function requestUserInfo({ user_email }) {
-  return axios.get(`/api/users/display/${user_email}`);
+function requestUserInfo({ email }) {
+  console.log("api에서", email);
+  return axios.get(`/api/users/display/one/${email}`);
+}
+
+// 프로필 이미지 업로드
+async function uploadUserImage(sendingData) {
+  const { data } = await axios.post(
+    "/api/users/upload/profileImage",
+    sendingData
+  );
+  console.log("api 받은 결과", data);
+  return data;
 }
 
 export default {
@@ -38,4 +49,5 @@ export default {
   requestAuth,
   requestLogout,
   requestUserInfo,
+  uploadUserImage,
 };

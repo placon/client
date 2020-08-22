@@ -2,17 +2,30 @@ import React, { useState, useEffect } from "react";
 import ProfileHeader from "../../components/Profile/ProfileHeader";
 import ProfileButtonModal from "../../components/Profile/ProfileButtonModal";
 import S3FileUpload from "react-s3";
-import { amazonS3Url } from "../../config/config";
 import amazonS3 from "../../config/amazonS3";
-import changeFileName from "../../utils/changeFileName";
+import ChangeFileName from "../../utils/changeFileName";
+import UserApi from "../../api/user";
+import { userInfoRequest } from "../../reducers/user";
+import { useDispatch, useSelector } from "react-redux";
 
-function ProfileContainer() {
-  const [userInfo, setUserInfo] = useState();
+function ProfileContainer(props) {
+  const { email } = props;
+  const [myInfo, setMyInfo] = useState();
   const [showImageModal, setShowImageModal] = useState(false);
+  const dispatch = useDispatch();
+  const { userInfo } = useSelector((state) => state.user);
+  console.log(email);
 
   useEffect(() => {
     const myInfo = JSON.parse(window.sessionStorage.getItem("myInfo"));
-    setUserInfo(myInfo);
+    setMyInfo(myInfo);
+
+    // 클릭해서 들어온  userId로 유저 상세정보 요청
+    dispatch(
+      userInfoRequest({
+        email,
+      })
+    );
   }, []);
 
   const onChangeProfileImage = (e) => {
@@ -20,30 +33,54 @@ function ProfileContainer() {
       return;
     }
 
-    console.log(e.target.files[0].name);
     // 파일명 랜덤값으로 변경
     const originFile = e.target.files[0];
     const newFileName = ChangeFileName(originFile.name);
-    const newPostFile = new File([originFile], newFileName, {
+    const newImageFile = new File([originFile], newFileName, {
       type: originFile.type,
     });
-    amazonS3.dirName = `placon/user/${userInfo._id}`;
+    amazonS3.dirName = `placon/user/${myInfo._id}`;
+
+    S3FileUpload.uploadFile(newImageFile, amazonS3)
+      .then((data) => {
+        console.log("업로드 된 데이터 : ", data);
+        setMyInfo({ ...myInfo, profile_image: newFileName });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    const sendImageRequest = async () => {
+      const result = await UserApi.uploadUserImage({
+        _id: userInfo._id,
+        profile_image: newFileName,
+      });
+      console.log(result);
+    };
+    sendImageRequest();
+    window.sessionStorage.setItem("myInfo", JSON.stringify(myInfo));
+
+    window.location.reload();
   };
 
   return (
     <>
-      <ProfileHeader
-        setShowImageModal={setShowImageModal}
-        userInfo={userInfo}
-      />
-      {showImageModal && (
-        <ProfileButtonModal
-          setShowImageModal={setShowImageModal}
-          onChangeProfileImage={onChangeProfileImage}
-        />
-      )}
+      {userInfo && myInfo && (
+        <>
+          <ProfileHeader
+            setShowImageModal={setShowImageModal}
+            userInfo={userInfo}
+            isMe={myInfo._id === userInfo._id}
+          />
 
-      <div>dsf</div>
+          {showImageModal && (
+            <ProfileButtonModal
+              setShowImageModal={setShowImageModal}
+              onChangeProfileImage={onChangeProfileImage}
+            />
+          )}
+        </>
+      )}
     </>
   );
 }

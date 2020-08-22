@@ -100,18 +100,17 @@ function* watchLogout() {
 
 function* userInfo(action) {
   try {
-    var result = yield call(UserApi.requestUserInfo, action.payload);
-    console.log(result);
+    var { data } = yield call(UserApi.requestUserInfo, action.payload);
 
-    if (result) {
+    if (data) {
       yield put({
         type: USER_INFO_SUCCESS,
-        payload: result.data,
+        payload: data.user,
       });
     } else {
       yield put({
         type: USER_INFO_FAILURE,
-        payload: result.data,
+        payload: data,
       });
     }
   } catch (e) {

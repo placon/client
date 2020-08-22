@@ -1,10 +1,10 @@
 import React from "react";
 import ProfileContainer from "../../containers/Profile";
 
-function ProfilePage() {
+function ProfilePage(props) {
   return (
     <>
-      <ProfileContainer />
+      <ProfileContainer email={props.location.state.email} />
     </>
   );
 }

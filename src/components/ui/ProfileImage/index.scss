@@ -1,7 +1,11 @@
 .ProfileImage {
   border-radius: 50%;
-  cursor: pointer;
+  // cursor: pointer;
   border: 1px solid gray;
+
+  &.isMe {
+    cursor: pointer;
+  }
 
   img {
     width: 100%;
@@ -14,11 +18,11 @@
     height: 150px;
   }
   &.medium {
-    width: 100px;
-    height: 100px;
-  }
-  &.small {
     width: 50px;
     height: 50px;
+  }
+  &.small {
+    width: 30px;
+    height: 30px;
   }
 }

@@ -5,6 +5,8 @@ import useInput from "../../../lib/hooks/useInput";
 import Button from "../../ui/Button";
 import { logoutRequest } from "../../../reducers/user";
 import { useDispatch } from "react-redux";
+import ProfileImage from "../../ui/ProfileImage";
+import { amazonS3Url } from "../../../config/config";
 
 function index({ login, userInfo }) {
   const dispatch = useDispatch();
@@ -37,11 +39,18 @@ function index({ login, userInfo }) {
           {login ? (
             <>
               <figure className="mailbox"></figure>
-              <figure
-                className={`profile ${
-                  !userInfo.profile_image && "default-image"
-                }`}
-              ></figure>
+              <Link
+                to={{ pathname: "/profile", state: { user_id: userInfo._id } }}
+              >
+                <ProfileImage
+                  size="small"
+                  imageUrl={
+                    !userInfo.profile_image
+                      ? `${amazonS3Url}/profile-default.png`
+                      : `${amazonS3Url}/user/${userInfo._id}/${userInfo.profile_image}`
+                  }
+                />
+              </Link>
               <Button size="small" onClick={onLogout}>
                 로그아웃
               </Button>
