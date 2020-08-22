@@ -8,7 +8,8 @@ export const initialState = {
   loginErrorReason: "", // 로그인 실패 사유
   isLoggingOut: false, // 로그아웃 시도중
 
-  myInfo: null,
+  myInfo: null, // 내 정보
+  userInfo: null, // 조회한 유저 상세 정보
 };
 
 // 회원가입
@@ -40,8 +41,19 @@ export const logoutRequest = () => ({
   type: LOG_OUT_REQUEST,
 });
 
+// 유저 정보 조회
+export const USER_INFO_REQUEST = " USER_INFO_REQUEST";
+export const USER_INFO_SUCCESS = " USER_INFO_SUCCESS";
+export const USER_INFO_FAILURE = " USER_INFO_FAILURE";
+
+export const userInfoRequest = (data) => ({
+  type: USER_INFO_REQUEST,
+  payload: data,
+});
+
 export default (state = initialState, action) => {
   switch (action.type) {
+    // 회원가입
     case SIGN_UP_REQUEST:
       return {
         ...state,
@@ -65,6 +77,8 @@ export default (state = initialState, action) => {
         isSignedUp: true,
         signUpErrorReason: action.payload.errorReason,
       };
+
+    // 로그인
     case LOG_IN_REQUEST:
       return {
         ...state,
@@ -81,6 +95,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
       };
+
+    // 로그아웃
     case LOG_OUT_REQUEST:
       return {
         ...state,
@@ -95,6 +111,23 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isLoggingOut: false,
+      };
+
+    // 유저 정보 상세 조회
+    case USER_INFO_REQUEST:
+      return {
+        ...state,
+        userInfo: null,
+      };
+    case USER_INFO_SUCCESS:
+      return {
+        ...state,
+        userInfo: action.payload,
+      };
+    case USER_INFO_FAILURE:
+      return {
+        ...state,
+        userInfo: null,
       };
 
     default:

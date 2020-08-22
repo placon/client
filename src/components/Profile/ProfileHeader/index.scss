@@ -1,0 +1,29 @@
+.profile-box {
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 20px 0px;
+  border: 1px solid green;
+  display: flex;
+
+  .image-section {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .info-section {
+    flex-grow: 2;
+    li {
+      float: left;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      h3 {
+        margin-right: 20px;
+      }
+    }
+  }
+}

@@ -16,6 +16,9 @@ import {
   LOG_OUT_REQUEST,
   LOG_OUT_FAILURE,
   LOG_OUT_SUCCESS,
+  USER_INFO_REQUEST,
+  USER_INFO_SUCCESS,
+  USER_INFO_FAILURE,
 } from "../reducers/user";
 
 import UserApi from "../api/user";
@@ -95,6 +98,36 @@ function* watchLogout() {
   yield takeLatest(LOG_OUT_REQUEST, logout);
 }
 
+function* userInfo(action) {
+  try {
+    var result = yield call(UserApi.requestUserInfo, action.payload);
+    console.log(result);
+
+    if (result) {
+      yield put({
+        type: USER_INFO_SUCCESS,
+        payload: result.data,
+      });
+    } else {
+      yield put({
+        type: USER_INFO_FAILURE,
+        payload: result.data,
+      });
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+function* watchUserInfo() {
+  yield takeEvery(USER_INFO_REQUEST, userInfo);
+}
+
 export default function* userSaga() {
-  yield all([fork(watchSignup), fork(watchLogin), fork(watchLogout)]);
+  yield all([
+    fork(watchSignup),
+    fork(watchLogin),
+    fork(watchLogout),
+    fork(watchUserInfo),
+  ]);
 }
