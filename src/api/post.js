@@ -12,21 +12,18 @@ const postList = async (sendingData) => {
   );
 
   return data;
-
-  // return axios.get(
-  //   `/api/posts/display/list/lang/${native_language}/${target_language}/${page_index}/${page_size}`
-  // );
 };
 
 // 특정 사용자의 포스트 리스트 조회
-function userPostList(data) {
-  const user_id = data.user_id;
-  const page_size = data.page_size;
-  const page_index = data.page_index;
-
-  return axios.get(
-    `/api/posts/display/user/${user_id}/${page_index}/${page_size}`
+async function userPostList(sendingData) {
+  const user_id = sendingData.user_id;
+  const page_size = sendingData.page_size;
+  const page_index = sendingData.page_index;
+  const { data } = await axios.get(
+    `/api/posts/display/list/user/${user_id}/${page_index}/${page_size}`
   );
+
+  return data;
 }
 
 // 언어별 포스트 리스트

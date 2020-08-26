@@ -7,19 +7,15 @@ import { Link } from "react-router-dom";
 
 function PostForm(props) {
   const { postData, isMyPost, onDeletePost, onUpdatePost } = props;
+  const { _id, hashtags, post_context, post_images, user_id } = postData;
   const {
-    _id,
-    email,
-    hashtags,
+    gender,
     name,
-    native_language,
-    post_context,
-    post_images,
+    email,
     profile_image,
-    profile_text,
+    native_language,
     target_language,
-    user_id,
-  } = postData;
+  } = user_id;
 
   return (
     <div className="post-form-container">
@@ -31,7 +27,7 @@ function PostForm(props) {
               imageUrl={
                 !profile_image
                   ? `${amazonS3Url}/profile-default.png`
-                  : `${amazonS3Url}/user/${user_id}/${profile_image}`
+                  : `${amazonS3Url}/user/${user_id._id}/${profile_image}`
               }
             />
           </div>
@@ -53,7 +49,7 @@ function PostForm(props) {
               <Button
                 size="small"
                 onClick={() => {
-                  onDeletePost(postId);
+                  onDeletePost(_id);
                 }}
               >
                 삭제

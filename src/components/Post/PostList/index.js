@@ -6,14 +6,17 @@ import postApi from "../../../api/post";
 import { deletePostRequest, updatePostRequest } from "../../../reducers/post";
 import Button from "../../ui/Button";
 
-function PostList() {
+function PostList(props) {
   const dispatch = useDispatch();
-  const { deletedPost, updatedPost } = useSelector((state) => state.post);
+  const { isProfilePage, profileUser } = props;
+  const { deletedPost, updatedPost, newPost } = useSelector(
+    (state) => state.post
+  );
 
   const [pageIndex, setPageIndex] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [list, setList] = useState([]);
-  const [myId, setMyId] = useState("");
+  const [myInFo, setMyInFo] = useState("");
 
   const handleScroll = () => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
@@ -27,29 +30,40 @@ function PostList() {
     if (!hasMore) {
       return;
     }
-    const page_size = 5; // 몇 개씩 불러올건지
-    const loadMorePosts = async () => {
-      const sendingData = {
-        page_index: pageIndex,
-        page_size,
-        native_language: "KR",
-        target_language: "EN",
-      };
-      const result = await postApi.postList(sendingData);
-      console.log(result.display_info);
-      if (result) {
-        setList((prev) => [...prev, ...result.display_info]);
-        if (result.display_info.length < page_size) {
-          setHasMore(false);
+    if (myInFo) {
+      const page_size = 5; // 몇 개씩 불러올건지
+      const loadMorePosts = async () => {
+        const sendingData = {
+          page_index: pageIndex,
+          page_size,
+          native_language: myInFo.native_language,
+          target_language: myInFo.target_language,
+        };
+
+        let result = null;
+        if (isProfilePage && profileUser) {
+          console.log("내가 실행된다.");
+          sendingData.user_id = profileUser._id;
+          result = await postApi.userPostList(sendingData);
+        } else {
+          result = await postApi.postList(sendingData);
         }
-      }
-    };
-    loadMorePosts();
-  }, [pageIndex, deletedPost, updatedPost]);
+
+        console.log(result.display_info);
+        if (result) {
+          setList((prev) => [...prev, ...result.display_info]);
+          if (result.display_info.length < page_size) {
+            setHasMore(false);
+          }
+        }
+      };
+      loadMorePosts();
+    }
+  }, [pageIndex, deletedPost, updatedPost, myInFo, isProfilePage]);
 
   useEffect(() => {
-    let id = JSON.parse(window.sessionStorage.getItem("myInfo"))._id;
-    setMyId(id);
+    let info = JSON.parse(window.sessionStorage.getItem("myInfo"));
+    setMyInFo(info);
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -76,8 +90,8 @@ function PostList() {
   };
 
   return (
-    <>
-      <div>
+    <div className="post-list-container">
+      <>
         {list &&
           list.map((post, idx) => (
             <Post
@@ -85,11 +99,11 @@ function PostList() {
               postData={post}
               onDeletePost={onDeletePost}
               onUpdatePost={onUpdatePost}
-              isMyPost={post.user_id === myId}
+              isMyPost={post.user_id._id === myInFo._id}
             />
           ))}
-      </div>
-    </>
+      </>
+    </div>
   );
 }
 
