@@ -7,11 +7,11 @@ export default function (fileName) {
   const pureFileName = fileName.substring(0, lastDotIndex);
 
   const date = moment().format("YYYYMMDD");
-  const randomString = Math.random().toString(36).substring(2, 8);
+  const randomString = Math.random().toString(36).substring(2, 15);
   const cleanFileName = pureFileName.toLowerCase().replace(/[^a-z0-9]/g, "-");
   const newFileName = `${date}-${randomString}-${cleanFileName}`.substring(
     0,
-    50
+    150
   );
 
   return newFileName + fileExt;
