@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 function PostForm(props) {
   const { postData, isMyPost, onDeletePost, onUpdatePost } = props;
-  const { _id, hashtags, post_context, post_images, user_id } = postData;
+  const { _id, hashtags, post_context, post_images, posted_by } = postData;
   const {
     gender,
     name,
@@ -15,7 +15,7 @@ function PostForm(props) {
     profile_image,
     native_language,
     target_language,
-  } = user_id;
+  } = posted_by;
 
   return (
     <div className="post-form-container">
@@ -27,7 +27,7 @@ function PostForm(props) {
               imageUrl={
                 !profile_image
                   ? `${amazonS3Url}/profile-default.png`
-                  : `${amazonS3Url}/user/${user_id._id}/${profile_image}`
+                  : `${amazonS3Url}/user/${posted_by._id}/${profile_image}`
               }
             />
           </div>
@@ -68,9 +68,13 @@ function PostForm(props) {
         </div>
       </div>
       <div className="content image">
-        <figure>이미지1</figure>
-        <figure>이미지2</figure>
-        <figure>이미지3</figure>
+        {post_images.map((postImage, idx) => (
+          <figure key={idx}>
+            <img
+              src={`${amazonS3Url}/user/${posted_by._id}/post/${postImage}`}
+            />
+          </figure>
+        ))}
       </div>
     </div>
   );

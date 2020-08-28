@@ -4,7 +4,6 @@ import Post from "../PostForm";
 import { useDispatch, useSelector } from "react-redux";
 import postApi from "../../../api/post";
 import { deletePostRequest, updatePostRequest } from "../../../reducers/post";
-import Button from "../../ui/Button";
 
 function PostList(props) {
   const dispatch = useDispatch();
@@ -16,7 +15,7 @@ function PostList(props) {
   const [pageIndex, setPageIndex] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [list, setList] = useState([]);
-  const [myInFo, setMyInFo] = useState("");
+  const [myInFo, setMyInFo] = useState();
 
   const handleScroll = () => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
@@ -49,7 +48,7 @@ function PostList(props) {
           result = await postApi.postList(sendingData);
         }
 
-        console.log(result.display_info);
+        console.log("야야", result.display_info);
         if (result) {
           setList((prev) => [...prev, ...result.display_info]);
           if (result.display_info.length < page_size) {
@@ -93,13 +92,14 @@ function PostList(props) {
     <div className="post-list-container">
       <>
         {list &&
+          myInFo &&
           list.map((post, idx) => (
             <Post
               key={idx}
               postData={post}
               onDeletePost={onDeletePost}
               onUpdatePost={onUpdatePost}
-              isMyPost={post.user_id._id === myInFo._id}
+              isMyPost={post.posted_by._id === myInFo._id}
             />
           ))}
       </>
