@@ -33,16 +33,8 @@ function ProfileContainer(props) {
       return;
     }
 
-    // 파일명 랜덤값으로 변경
     const originFile = e.target.files[0];
-    var LengthOfFileName = originFile.name.length; // 파일명의 길이
-    var lastDotIndex = originFile.name.lastIndexOf("."); // 확장자를 의미하는 .의 위치
-    var fileExt = originFile.name
-      .substring(lastDotIndex, LengthOfFileName)
-      .toLowerCase(); // 파일 "." + 확장자 추출 후 소문자로 변경
-    var originFileName = originFile.name.substring(0, lastDotIndex);
-    var newFileName = ChangeFileName(originFileName) + fileExt;
-
+    const newFileName = ChangeFileName(originFile.name);
     const newImageFile = new File([originFile], newFileName, {
       type: originFile.type,
     });
