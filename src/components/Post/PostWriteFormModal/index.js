@@ -5,17 +5,36 @@ import S3FileUpload from "react-s3";
 import amazonS3 from "../../../config/amazonS3";
 import { amazonS3Url } from "../../../config/config";
 import ChangeFileName from "../../../utils/changeFileName";
+import { useDispatch } from "react-redux";
+import { writePostRequest } from "../../../reducers/post";
 
 function PostWriteFormModal(props) {
+  const { userInfo, setShowWriteModal } = props;
+
+  const dispatch = useDispatch();
   const [images, setImages] = useState([]);
-  const {
-    userInfo,
-    content,
-    setContent,
-    onChangeContent,
-    onSubmit,
-    setShowWriteModal,
-  } = props;
+  const [content, setContent] = useState("");
+
+  const onChangeContent = (e) => {
+    setContent(e.target.value);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    const imageArray = [];
+    images.forEach((item) => {
+      imageArray.push(item.name);
+    });
+
+    dispatch(
+      writePostRequest({
+        posted_by: userInfo._id,
+        post_context: content,
+        post_images: imageArray,
+      })
+    );
+  };
 
   const closeModal = () => {
     if (!content && images.length === 0) {
@@ -59,13 +78,16 @@ function PostWriteFormModal(props) {
       alert("이미지는 최대 6개까지 등록할 수 있습니다.");
       return;
     }
+
     const originFile = e.target.files[0];
     const newFileName = ChangeFileName(originFile.name);
     const newPostFile = new File([originFile], newFileName, {
       type: originFile.type,
     });
 
-    amazonS3.dirName = `placon/user/${userInfo._id}`;
+    console.log("new name", newPostFile.name);
+
+    amazonS3.dirName = `placon/user/${userInfo._id}/post`;
 
     S3FileUpload.uploadFile(newPostFile, amazonS3)
       .then((data) => {
