@@ -1,10 +1,11 @@
 import React from "react";
-import ProfileButtonModal from "../components/Profile/ProfileButtonModal";
+
+import Comment from "../components/Comment/Comment";
 
 function TestPage() {
   return (
     <div>
-      <ProfileButtonModal />
+      <Comment />
     </div>
   );
 }

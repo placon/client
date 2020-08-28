@@ -1,0 +1,28 @@
+.comment-component {
+  display: flex;
+  border: 1px solid gray;
+  padding: 10px 15px;
+  width: 100%;
+
+  .profile {
+    width: 52px;
+    display: flex;
+    align-items: center;
+  }
+
+  .content {
+    .user-id {
+      padding-top: 6px;
+      padding-bottom: 10px;
+
+      h4 {
+        margin: 0;
+        font-size: 14px;
+      }
+    }
+
+    .text {
+      font-size: 14px;
+    }
+  }
+}

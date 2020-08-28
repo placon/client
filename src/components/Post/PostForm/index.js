@@ -58,7 +58,7 @@ function PostForm(props) {
           </span>
         </div>
       </div>
-      <div className="content">
+      <section className="content">
         <div className="text">{post_context}</div>
         <div className="hashtag">
           <ul className="hashtag-list">
@@ -66,8 +66,8 @@ function PostForm(props) {
               hashtags.map((hashtag, idx) => <li key={idx}>#{hashtag}</li>)}
           </ul>
         </div>
-      </div>
-      <div className="content image">
+      </section>
+      <section className="content image">
         {post_images.map((postImage, idx) => (
           <figure key={idx}>
             <img
@@ -75,7 +75,7 @@ function PostForm(props) {
             />
           </figure>
         ))}
-      </div>
+      </section>
     </div>
   );
 }
