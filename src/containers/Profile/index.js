@@ -7,6 +7,7 @@ import ChangeFileName from "../../utils/changeFileName";
 import UserApi from "../../api/user";
 import { userInfoRequest } from "../../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
+import PostList from "../../components/Post/PostList";
 
 function ProfileContainer(props) {
   const { email } = props;
@@ -14,7 +15,6 @@ function ProfileContainer(props) {
   const [showImageModal, setShowImageModal] = useState(false);
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
-  console.log(email);
 
   useEffect(() => {
     const myInfo = JSON.parse(window.sessionStorage.getItem("myInfo"));
@@ -33,7 +33,6 @@ function ProfileContainer(props) {
       return;
     }
 
-    // 파일명 랜덤값으로 변경
     const originFile = e.target.files[0];
     const newFileName = ChangeFileName(originFile.name);
     const newImageFile = new File([originFile], newFileName, {
@@ -72,6 +71,7 @@ function ProfileContainer(props) {
             userInfo={userInfo}
             isMe={myInfo._id === userInfo._id}
           />
+          <PostList isProfilePage={true} profileUser={userInfo} />
 
           {showImageModal && (
             <ProfileButtonModal

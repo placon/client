@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import LoginForm from "../../components/Login";
+import LoginForm from "../../components/login";
 import { useDispatch, useSelector } from "react-redux";
 import { loginRequest } from "../../reducers/user";
 

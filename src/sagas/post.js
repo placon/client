@@ -54,9 +54,10 @@ function* writePost(action) {
     if (result) {
       yield put({
         type: WRITE_POST_SUCCESS,
-        payload: result.data,
+        payload: result.data.uploaded_post,
       });
       alert("포스트가 성공적으로 등록되었습니다.");
+      window.location.reload();
     }
   } catch (e) {
     console.log(e);

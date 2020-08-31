@@ -6,6 +6,7 @@ import { amazonS3Url } from "../../../config/config";
 
 function ProfileBox(props) {
   const { userInfo, setShowImageModal, isMe } = props;
+  console.log(props);
 
   return (
     <>

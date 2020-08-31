@@ -40,7 +40,7 @@ function index({ login, userInfo }) {
             <>
               <figure className="mailbox"></figure>
               <Link
-                to={{ pathname: "/profile", state: { user_id: userInfo._id } }}
+                to={{ pathname: "/profile", state: { email: userInfo.email } }}
               >
                 <ProfileImage
                   size="small"
