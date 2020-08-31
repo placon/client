@@ -32,9 +32,13 @@ function ProfileBox(props) {
             <section className="info-section">
               <div className="row">
                 <h3>{userInfo.name}</h3>
-                {isMe && (
+                {isMe ? (
                   <Button size="small" outline>
                     프로필 편집
+                  </Button>
+                ) : (
+                  <Button size="small" outline>
+                    메세지
                   </Button>
                 )}
               </div>
