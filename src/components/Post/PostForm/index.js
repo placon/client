@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./index.scss";
 import Button from "../../ui/Button";
 import ProfileImage from "../../ui/ProfileImage";
 import { amazonS3Url } from "../../../config/config";
 import { Link } from "react-router-dom";
+import CommentList from "../../Comment/CommentList";
 
 function PostForm(props) {
   const { postData, isMyPost, onDeletePost, onUpdatePost } = props;
@@ -16,10 +17,11 @@ function PostForm(props) {
     native_language,
     target_language,
   } = posted_by;
+  const [showComment, setShowComment] = useState(false);
 
   return (
     <div className="post-form-container">
-      <div className="profile">
+      <div className="my-profile">
         <Link to={{ pathname: "/profile", state: { email: email } }}>
           <div className="profile-image">
             <ProfileImage
@@ -58,7 +60,7 @@ function PostForm(props) {
           </span>
         </div>
       </div>
-      <div className="content">
+      <section className="post-content">
         <div className="text">{post_context}</div>
         <div className="hashtag">
           <ul className="hashtag-list">
@@ -66,8 +68,8 @@ function PostForm(props) {
               hashtags.map((hashtag, idx) => <li key={idx}>#{hashtag}</li>)}
           </ul>
         </div>
-      </div>
-      <div className="content image">
+      </section>
+      <section className="post-content image">
         {post_images.map((postImage, idx) => (
           <figure key={idx}>
             <img
@@ -75,7 +77,21 @@ function PostForm(props) {
             />
           </figure>
         ))}
-      </div>
+      </section>
+      <section className="post-status-bar">
+        <figure className="status-icon">
+          <img src={`${amazonS3Url}/heart-empty.svg`} />
+        </figure>
+        <figure
+          className="status-icon"
+          onClick={() => {
+            setShowComment((prev) => !prev);
+          }}
+        >
+          <img src={`${amazonS3Url}/comment.svg`} />
+        </figure>
+      </section>
+      {showComment && <CommentList postId={_id} />}
     </div>
   );
 }
