@@ -11,7 +11,6 @@ async function commentList(sendingData) {
   const result = await axios.get(
     `api/posts/comment/display/${post_id}/${page_index}/${page_size}`
   );
-  console.log("댓글 리스트 결과 확인 : ", result);
 
   return result;
 }

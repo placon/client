@@ -13,7 +13,7 @@ import commentApi from "../api/comment";
 function* deleteComment(action) {
   try {
     const { data } = yield call(commentApi.deleteComment, action.payload);
-    console.log("결과 확인 사가에서 ", data);
+    // console.log("결과 확인 사가에서 ", data);
 
     if (data && data.delete_comment_success) {
       yield put({
@@ -37,7 +37,7 @@ function* watchDeleteComment() {
 
 // 댓글 작성
 function* writeComment(action) {
-  console.log("사가에서 보낼 데이터 테스트", action.payload);
+  // console.log("사가에서 보낼 데이터 테스트", action.payload);
 
   try {
     const { data } = yield call(commentApi.writeComment, action.payload);

@@ -8,6 +8,7 @@ import commentApi from "../../../api/comment";
 function CommentList(props) {
   const { postId } = props; // 포스트 아이디
   const dispatch = useDispatch();
+  const { newComment } = useSelector((state) => state.comment);
 
   const [pageIndex, setPageIndex] = useState(0); // 페이지 번호
   const [hasMore, setHasMore] = useState(true);
@@ -49,6 +50,25 @@ function CommentList(props) {
     loadMoreComments();
   }, []);
 
+  useEffect(() => {
+    if (newComment.comment) {
+      let addedComment = newComment.comment;
+      // console.log("동작하구용", addedComment);
+
+      let comment = {
+        _id: addedComment._id,
+        comment_context: addedComment.comment_context,
+        commented_by: {
+          _id: addedComment.commented_by,
+          name: myInfo.name,
+          profile_image: myInfo.profile_image,
+        },
+      };
+
+      setCommentList((prev) => [...prev, comment]);
+    }
+  }, [newComment]);
+
   const onChangeCommentTab = (tab) => {
     if (commentTab === tab) {
       return;
@@ -70,6 +90,7 @@ function CommentList(props) {
         comment_context: commentContent,
       })
     );
+    setCommentContent("");
   };
 
   const onDeleteComment = (comment_id) => {

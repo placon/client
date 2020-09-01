@@ -37,7 +37,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
         newComment: {
-          newComment: action.payload,
+          comment: null,
+          loading: true,
+          error: null,
+        },
+      };
+    case WRITE_COMMENT_SUCCESS:
+      return {
+        ...state,
+        newComment: {
+          comment: action.payload,
           loading: false,
           error: null,
         },
