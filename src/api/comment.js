@@ -18,11 +18,12 @@ async function commentList(sendingData) {
 
 function deleteComment(sendingData) {
   const { _id, post_id } = sendingData;
-  // const result =
-  return null;
+  const result = axios.get(`/api/posts/comment/delete/${_id}/${post_id}`);
+  return result;
 }
 
 export default {
   writeComment,
   commentList,
+  deleteComment,
 };

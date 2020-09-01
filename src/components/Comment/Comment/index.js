@@ -2,6 +2,7 @@ import React from "react";
 import "./index.scss";
 import ProfileImage from "../../ui/ProfileImage";
 import { amazonS3Url } from "../../../config/config";
+import Button from "../../ui/Button";
 
 function Comment(props) {
   const {
@@ -16,6 +17,7 @@ function Comment(props) {
     target_language,
     profile_image,
   } = commented_by;
+  const { isMyComment, onDeleteComment } = props;
 
   return (
     <div className="comment-component">
@@ -27,7 +29,20 @@ function Comment(props) {
       </section>
       <section className="content">
         <div className="user-id">
-          <h4>Jungwon</h4>
+          <h4>{name}</h4>
+          {isMyComment && (
+            <>
+              <Button
+                size="small"
+                outline
+                onClick={() => {
+                  onDeleteComment(_id);
+                }}
+              >
+                삭제
+              </Button>
+            </>
+          )}
         </div>
         <div className="text">{comment_context}</div>
       </section>

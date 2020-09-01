@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Comment from "../Comment";
 import "./index.scss";
-import { writeComment } from "../../../reducers/comment";
+import { writeComment, deleteComment } from "../../../reducers/comment";
 import { useDispatch, useSelector } from "react-redux";
 import commentApi from "../../../api/comment";
 
 function CommentList(props) {
   const { postId } = props; // 포스트 아이디
   const dispatch = useDispatch();
-  const { newComment } = useSelector((state) => state.comment);
 
   const [pageIndex, setPageIndex] = useState(0); // 페이지 번호
   const [hasMore, setHasMore] = useState(true);
@@ -16,6 +15,8 @@ function CommentList(props) {
   const [commentList, setCommentList] = useState([]); // 댓글 리스트
   const [commentContent, setCommentContent] = useState("");
   const [commentTab, setCommentTab] = useState(0);
+
+  const [myInfo, setMyInfo] = useState();
 
   const loadMoreComments = async () => {
     if (!hasMore) {
@@ -42,16 +43,11 @@ function CommentList(props) {
   };
 
   useEffect(() => {
+    let info = JSON.parse(window.sessionStorage.getItem("myInfo"));
+    setMyInfo(info);
+
     loadMoreComments();
   }, []);
-
-  // useEffect(() => {
-  //   console.log("댓글 작성 완료");
-  //   if (commentList) {
-  //     setCommentList((prev) => [...prev, ...newComment.comment]);
-  //     console.log("요기로");
-  //   }
-  // }, [newComment]);
 
   const onChangeCommentTab = (tab) => {
     if (commentTab === tab) {
@@ -76,6 +72,20 @@ function CommentList(props) {
     );
   };
 
+  const onDeleteComment = (comment_id) => {
+    let check = confirm("댓글을 정말 삭제하시겠습니까?");
+    if (!check) {
+      return;
+    }
+    dispatch(
+      deleteComment({
+        _id: comment_id,
+        post_id: postId,
+      })
+    );
+    setCommentList(commentList.filter((comment) => comment._id !== comment_id));
+  };
+
   return (
     <div className="comment-list-container">
       <div className="comment-tab">
@@ -97,9 +107,15 @@ function CommentList(props) {
         </div>
       </div>
 
-      {commentList.map((comment, idx) => (
-        <Comment key={idx} commentData={comment} />
-      ))}
+      {myInfo &&
+        commentList.map((comment, idx) => (
+          <Comment
+            key={idx}
+            commentData={comment}
+            isMyComment={myInfo._id === comment.commented_by._id}
+            onDeleteComment={onDeleteComment}
+          />
+        ))}
       <div className="show-more-button" onClick={loadMoreComments}>
         댓글 더 보기 ...
       </div>
