@@ -2,8 +2,9 @@
   border: 1px solid gray;
   max-width: 600px;
   margin: 0 auto;
+  padding: 10px 0px;
 
-  .profile {
+  .my-profile {
     padding: 10px;
     min-height: 60px;
     display: flex;
@@ -43,7 +44,7 @@
     }
   }
 
-  .content {
+  .post-content {
     display: flex;
     border: 1px solid green;
 
@@ -72,5 +73,17 @@
   }
   & + & {
     margin-top: 50px;
+  }
+
+  .post-status-bar {
+    display: flex;
+    padding: 10px 10px;
+
+    .status-icon {
+      cursor: pointer;
+    }
+    .status-icon + .status-icon {
+      margin-left: 20px;
+    }
   }
 }

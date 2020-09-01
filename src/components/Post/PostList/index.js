@@ -41,14 +41,12 @@ function PostList(props) {
 
         let result = null;
         if (isProfilePage && profileUser) {
-          console.log("내가 실행된다.");
           sendingData.user_id = profileUser._id;
           result = await postApi.userPostList(sendingData);
         } else {
           result = await postApi.postList(sendingData);
         }
 
-        console.log("야야", result.display_info);
         if (result) {
           setList((prev) => [...prev, ...result.display_info]);
           if (result.display_info.length < page_size) {
