@@ -1,0 +1,35 @@
+.comment-list-container {
+  padding: 0 10px;
+
+  .comment-tab {
+    display: flex;
+    width: 100%;
+
+    .tab {
+      cursor: pointer;
+      border: 1px solid gray;
+      width: 50%;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &.active {
+        background-color: #e8e1e1;
+      }
+    }
+  }
+
+  .show-more-button {
+    padding: 10px 0px;
+    cursor: pointer;
+  }
+
+  .comment-write-form {
+    display: flex;
+
+    textarea {
+      width: 80%;
+    }
+  }
+}
