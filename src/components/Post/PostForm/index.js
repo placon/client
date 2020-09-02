@@ -5,6 +5,7 @@ import ProfileImage from "../../ui/ProfileImage";
 import { amazonS3Url } from "../../../config/config";
 import { Link } from "react-router-dom";
 import CommentList from "../../Comment/CommentList";
+import CorrectionModal from "../../Comment/CorrectionModal";
 
 function PostForm(props) {
   const { postData, isMyPost, onDeletePost, onUpdatePost } = props;
@@ -18,6 +19,7 @@ function PostForm(props) {
     target_language,
   } = posted_by;
   const [showComment, setShowComment] = useState(false);
+  const [showCorrectionModal, setShowCorrectionModal] = useState(false);
 
   return (
     <div className="post-form-container">
@@ -90,8 +92,19 @@ function PostForm(props) {
         >
           <img src={`${amazonS3Url}/comment.svg`} />
         </figure>
+        <figure
+          className="status-icon"
+          onClick={() => {
+            setShowCorrectionModal(true);
+          }}
+        >
+          <img src={`${amazonS3Url}/correction.svg`} />
+        </figure>
       </section>
       {showComment && <CommentList postId={_id} />}
+      {showCorrectionModal && (
+        <CorrectionModal setShowCorrectionModal={setShowCorrectionModal} />
+      )}
     </div>
   );
 }

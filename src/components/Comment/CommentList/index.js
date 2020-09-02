@@ -34,7 +34,6 @@ function CommentList(props) {
     });
 
     if (data) {
-      console.log("댓글리스트 컴포넌트에서 확인", data);
       if (data.comment_list.length < pageSize) {
         setHasMore(false);
       }
@@ -51,7 +50,7 @@ function CommentList(props) {
   }, []);
 
   useEffect(() => {
-    if (newComment.comment) {
+    if (newComment.comment && myInfo) {
       let addedComment = newComment.comment;
       // console.log("동작하구용", addedComment);
 
