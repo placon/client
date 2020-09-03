@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./index.scss";
 import { amazonS3Url } from "../../../config/config";
 
 function CorrectionModal(props) {
-  const { setShowCorrectionModal } = props;
+  const { setShowCorrectionModal, postContent } = props;
+  const [content, setContent] = useState([]);
+
+  useEffect(() => {
+    let words = postContent.split(" ");
+    console.log(words);
+    setContent(words);
+  }, []);
+
   return (
     <div className="correction-modal-wrapper">
       <div className="correction-modal">
@@ -17,6 +25,9 @@ function CorrectionModal(props) {
           >
             <img src={`${amazonS3Url}/component/close-button.png`} />
           </figure>
+        </div>
+        <div className="content">
+          {content && content.map((word) => word + " ")}
         </div>
       </div>
     </div>

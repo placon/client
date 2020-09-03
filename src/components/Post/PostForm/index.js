@@ -103,7 +103,7 @@ function PostForm(props) {
       </section>
       {showComment && <CommentList postId={_id} />}
       {showCorrectionModal && (
-        <CorrectionModal setShowCorrectionModal={setShowCorrectionModal} />
+        <CorrectionModal setShowCorrectionModal={setShowCorrectionModal} postContent={post_context} />
       )}
     </div>
   );
