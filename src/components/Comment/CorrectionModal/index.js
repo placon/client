@@ -4,13 +4,13 @@ import { amazonS3Url } from "../../../config/config";
 
 function CorrectionModal(props) {
   const { setShowCorrectionModal, postContent } = props;
-  const [content, setContent] = useState([]);
+  // const [content, setContent] = useState([]);
 
-  useEffect(() => {
-    let words = postContent.split(" ");
-    console.log(words);
-    setContent(words);
-  }, []);
+  // useEffect(() => {
+  //   let words = postContent.split(" ");
+  //   console.log(words);
+  //   setContent(words);
+  // }, []);
 
   return (
     <div className="correction-modal-wrapper">
@@ -27,7 +27,11 @@ function CorrectionModal(props) {
           </figure>
         </div>
         <div className="content">
-          {content && content.map((word) => word + " ")}
+          {postContent.map((line, idx) => (
+            <div key={idx}>
+              {line.split(" ")} {idx}
+            </div>
+          ))}
         </div>
       </div>
     </div>

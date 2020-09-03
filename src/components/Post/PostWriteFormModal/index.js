@@ -16,7 +16,6 @@ function PostWriteFormModal(props) {
   const [content, setContent] = useState("");
 
   const onChangeContent = (e) => {
-    console.log(e.target.value);
     setContent(e.target.value);
   };
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./index.scss";
 import Button from "../../ui/Button";
 import ProfileImage from "../../ui/ProfileImage";
@@ -20,6 +20,13 @@ function PostForm(props) {
   } = posted_by;
   const [showComment, setShowComment] = useState(false);
   const [showCorrectionModal, setShowCorrectionModal] = useState(false);
+  const [postContent, setPostContent] = useState([]);
+
+  useEffect(() => {
+    let text = post_context.replace(/(?:\r\n|\r|\n)/g, "<br>");
+    let cutText = text.split("<br>");
+    setPostContent(cutText);
+  }, []);
 
   return (
     <div className="post-form-container">
@@ -63,7 +70,11 @@ function PostForm(props) {
         </div>
       </div>
       <section className="post-content">
-        <div className="text">{post_context}</div>
+        <div className="text">
+          {postContent.map((line, idx) => (
+            <div key={idx}>{line}</div>
+          ))}
+        </div>
         <div className="hashtag">
           <ul className="hashtag-list">
             {hashtags &&
@@ -103,7 +114,10 @@ function PostForm(props) {
       </section>
       {showComment && <CommentList postId={_id} />}
       {showCorrectionModal && (
-        <CorrectionModal setShowCorrectionModal={setShowCorrectionModal} postContent={post_context} />
+        <CorrectionModal
+          setShowCorrectionModal={setShowCorrectionModal}
+          postContent={postContent}
+        />
       )}
     </div>
   );

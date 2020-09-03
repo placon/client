@@ -48,6 +48,13 @@ function PostList(props) {
         }
 
         if (result) {
+          // for (let i = 0; i < result.display_info.length; i++) {
+          //   let text = result.display_info[i].post_context;
+          //   text = text.replace(/(?:\r\n|\r|\n)/g, "<br>");
+
+          //   console.log(text);
+          //   result.display_info[i].post_context = text;
+          // }
           setList((prev) => [...prev, ...result.display_info]);
           if (result.display_info.length < page_size) {
             setHasMore(false);
