@@ -9,6 +9,21 @@ export const initialState = {
     loading: false,
     error: null,
   },
+  newCorrection: {
+    comment: null,
+    loading: false,
+    error: null,
+  },
+  deleteCorrection: {
+    comment: null,
+    loading: false,
+    error: null,
+  },
+  correctionList: {
+    comments: null,
+    loading: false,
+    error: null,
+  },
 };
 
 // 댓글 작성
@@ -31,8 +46,28 @@ export const deleteComment = (data) => ({
   payload: data,
 });
 
+// 첨삭 댓글 작성
+export const WRITE_CORRECTION_REQUEST = "WRITE_CORRECTION_REQUEST";
+export const WRITE_CORRECTION_SUCCESS = "WRITE_CORRECTION_SUCCESS";
+export const WRITE_CORRECTION_FAILURE = "WRITE_CORRECTION_FAILURE";
+
+export const writeCorrection = (data) => ({
+  type: WRITE_CORRECTION_REQUEST,
+  payload: data,
+});
+
+// 첨삭 댓글 삭제
+export const DELETE_CORRECTION_REQUEST = "DELETE_CORRECTION_REQUEST";
+export const DELETE_CORRECTION_SUCCESS = "DELETE_CORRECTION_SUCCESS";
+export const DELETE_CORRECTION_FAILURE = "DELETE_CORRECTION_FAILURE";
+export const deleteCorrection = (data) => ({
+  type: DELETE_CORRECTIOn_REQUEST,
+  payload: data,
+});
+
 export default function (state = initialState, action) {
   switch (action.type) {
+    // 일반 댓글
     case WRITE_COMMENT_REQUEST:
       return {
         ...state,
@@ -65,6 +100,45 @@ export default function (state = initialState, action) {
       return {
         ...state,
         deleteComment: {
+          comment: action.payload,
+          loading: false,
+          error: null,
+        },
+      };
+
+    // 첨삭 댓글
+    case WRITE_CORRECTION_REQUEST:
+      return {
+        ...state,
+        newCorrection: {
+          comment: null,
+          loading: true,
+          error: null,
+        },
+      };
+    case WRITE_CORRECTION_SUCCESS:
+      return {
+        ...state,
+        newCorrection: {
+          comment: action.payload,
+          loading: false,
+          error: null,
+        },
+      };
+
+    case DELETE_CORRECTION_REQUEST:
+      return {
+        ...state,
+        deleteCorrection: {
+          comment: null,
+          loading: true,
+          error: null,
+        },
+      };
+    case DELETE_CORRECTION_SUCCESS:
+      return {
+        ...state,
+        deleteCorrection: {
           comment: action.payload,
           loading: false,
           error: null,

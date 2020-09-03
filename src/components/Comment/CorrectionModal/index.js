@@ -1,21 +1,30 @@
 import React, { useState, useEffect } from "react";
 import "./index.scss";
 import { amazonS3Url } from "../../../config/config";
-import CorrectionInput from "../CorrectionInput";
+import Button from "../../ui/Button";
 
 function CorrectionModal(props) {
   const { setShowCorrectionModal, postContent } = props;
   const [showInputModal, setShowInputModal] = useState(false);
-  const [content, setContent] = useState([]);
   const [modifiedText, setModifiedText] = useState("");
+  const [activeLine, setActiveLine] = useState(-1);
+  const [correctContent, setCorrectContent] = useState([]);
+
+  const onChangeModifiedText = (e) => {
+    setModifiedText(e.target.value);
+  };
+
+  const onSubmitModify = () => {
+    setShowInputModal(false);
+
+    let newArr = correctContent.slice(); // 배열 복사
+    newArr[activeLine] = modifiedText;
+    setCorrectContent(newArr);
+    setModifiedText(""); // 수정하는 input data 리셋
+  };
 
   useEffect(() => {
-    let arr = [];
-    for (let i = 0; i < postContent.length; i++) {
-      arr[i] = postContent[i].split(" ");
-      console.log(arr);
-      setContent((prev) => [...prev, arr]);
-    }
+    setCorrectContent(postContent);
   }, []);
 
   return (
@@ -33,31 +42,45 @@ function CorrectionModal(props) {
           </figure>
         </div>
         <div className="content">
-          {content.map((line, idx) => (
-            <div>
-              {line[idx].map((word) => (
-                <span
-                  className="word"
-                  onClick={() => {
-                    console.log(word);
-                    setShowInputModal(true);
-                  }}
-                >
-                  {word}{" "}
-                </span>
-              ))}{" "}
-              {idx}
+          {postContent.map((line, idx) => (
+            <div
+              className="word"
+              key={idx}
+              onClick={() => {
+                setShowInputModal(true);
+                setActiveLine(idx);
+              }}
+            >
+              {line} {idx}
             </div>
           ))}
+          <h4>수정된 내용</h4>
+          {correctContent.map((line, idx) => (
+            <div key={idx}>{line}</div>
+          ))}
+
+          <div>
+            {showInputModal && (
+              <>
+                <input value={modifiedText} onChange={onChangeModifiedText} />
+                <Button size="small" outline onClick={onSubmitModify}>
+                  수정
+                </Button>
+                <Button
+                  size="small"
+                  outline
+                  onClick={() => {
+                    setShowInputModal(false);
+                    setModifiedText("");
+                  }}
+                >
+                  취소
+                </Button>
+              </>
+            )}
+          </div>
         </div>
       </div>
-      {showInputModal && (
-        <CorrectionInput
-          modifiedText={modifiedText}
-          setModifiedText={setModifiedText}
-          setShowInputModal={setShowInputModal}
-        />
-      )}
     </div>
   );
 }

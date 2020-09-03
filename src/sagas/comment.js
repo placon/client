@@ -6,6 +6,12 @@ import {
   DELETE_COMMENT_REQUEST,
   DELETE_COMMENT_SUCCESS,
   DELETE_COMMENT_FAILURE,
+  WRITE_CORRECTION_REQUEST,
+  WRITE_CORRECTION_SUCCESS,
+  WRITE_CORRECTION_FAILURE,
+  DELETE_CORRECTION_REQUEST,
+  DELETE_CORRECTION_SUCCESS,
+  DELETE_CORRECTION_FAILURE,
 } from "../reducers/comment";
 
 import commentApi from "../api/comment";
@@ -64,6 +70,38 @@ function* watchWriteComment() {
   yield takeEvery(WRITE_COMMENT_REQUEST, writeComment);
 }
 
+// 첨삭 댓글 작성
+
+function* writeCorrection(action) {
+  try {
+    const { data } = yield call(commentApi.writeCorrection, action.payload);
+    console.log(data);
+
+    if (data && data.upload_correction_success) {
+      console.log(data);
+      yield put({
+        type: WRITE_CORRECTION_SUCCESS,
+        payload: data.uploaded_correction,
+      });
+    } else {
+      yield put({
+        type: WRITE_CORRECTION_FAILURE,
+        payload: data,
+      });
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+function* watchWriteCorrection() {
+  yield takeEvery(WRITE_CORRECTION_REQUEST, writeCorrection);
+}
+
 export default function* commentSaga() {
-  yield all([fork(watchWriteComment), fork(watchDeleteComment)]);
+  yield all([
+    fork(watchWriteComment),
+    fork(watchDeleteComment),
+    fork(watchWriteCorrection),
+  ]);
 }
