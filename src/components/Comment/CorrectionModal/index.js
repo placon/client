@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from "react";
 import "./index.scss";
 import { amazonS3Url } from "../../../config/config";
+import CorrectionInput from "../CorrectionInput";
 
 function CorrectionModal(props) {
   const { setShowCorrectionModal, postContent } = props;
-  // const [content, setContent] = useState([]);
+  const [showInputModal, setShowInputModal] = useState(false);
+  const [content, setContent] = useState([]);
+  const [modifiedText, setModifiedText] = useState("");
 
-  // useEffect(() => {
-  //   let words = postContent.split(" ");
-  //   console.log(words);
-  //   setContent(words);
-  // }, []);
+  useEffect(() => {
+    let arr = [];
+    for (let i = 0; i < postContent.length; i++) {
+      arr[i] = postContent[i].split(" ");
+      console.log(arr);
+      setContent((prev) => [...prev, arr]);
+    }
+  }, []);
 
   return (
     <div className="correction-modal-wrapper">
@@ -27,13 +33,31 @@ function CorrectionModal(props) {
           </figure>
         </div>
         <div className="content">
-          {postContent.map((line, idx) => (
-            <div key={idx}>
-              {line.split(" ")} {idx}
+          {content.map((line, idx) => (
+            <div>
+              {line[idx].map((word) => (
+                <span
+                  className="word"
+                  onClick={() => {
+                    console.log(word);
+                    setShowInputModal(true);
+                  }}
+                >
+                  {word}{" "}
+                </span>
+              ))}{" "}
+              {idx}
             </div>
           ))}
         </div>
       </div>
+      {showInputModal && (
+        <CorrectionInput
+          modifiedText={modifiedText}
+          setModifiedText={setModifiedText}
+          setShowInputModal={setShowInputModal}
+        />
+      )}
     </div>
   );
 }

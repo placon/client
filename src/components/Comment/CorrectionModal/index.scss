@@ -39,6 +39,13 @@
     .content {
       max-width: 600px;
       margin: 0 auto;
+
+      .word {
+        cursor: pointer;
+        &:hover {
+          color: green;
+        }
+      }
     }
   }
 }
