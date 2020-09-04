@@ -71,11 +71,9 @@ function* watchWriteComment() {
 }
 
 // 첨삭 댓글 작성
-
 function* writeCorrection(action) {
   try {
     const { data } = yield call(commentApi.writeCorrection, action.payload);
-    console.log(data);
 
     if (data && data.upload_correction_success) {
       console.log(data);

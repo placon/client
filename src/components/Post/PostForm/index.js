@@ -116,6 +116,7 @@ function PostForm(props) {
       {showCorrectionModal && (
         <CorrectionModal
           setShowCorrectionModal={setShowCorrectionModal}
+          postId={_id}
           postContent={postContent}
         />
       )}

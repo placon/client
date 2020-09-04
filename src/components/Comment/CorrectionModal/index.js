@@ -6,16 +6,32 @@ import { useDispatch, useSelector } from "react-redux";
 import { writeCorrection } from "../../../reducers/comment";
 
 function CorrectionModal(props) {
-  const { setShowCorrectionModal, postContent } = props;
+  const { setShowCorrectionModal, postId, postContent } = props;
   const [showInputModal, setShowInputModal] = useState(false);
   const [modifiedText, setModifiedText] = useState("");
+  const [additionalText, setAdditionalText] = useState("");
   const [activeLine, setActiveLine] = useState(-1);
   const [correctContent, setCorrectContent] = useState([]);
   const { newCorrection } = useSelector((state) => state.comment);
   const dispatch = useDispatch();
 
-  const onSubmit = () => {
-    console.log;
+  const onChangeAdditionalText = (e) => {
+    setAdditionalText(e.target.value);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log(correctContent);
+    console.log("포스트 아이디", postId);
+    console.log("추가 코멘트 : ", additionalText);
+    dispatch(
+      writeCorrection({
+        post_id: postId,
+        correction_context: correctContent,
+        additional_text: additionalText,
+      })
+    );
+    setAdditionalText("");
   };
 
   const onChangeModifiedText = (e) => {
@@ -26,13 +42,26 @@ function CorrectionModal(props) {
     setShowInputModal(false);
 
     let newArr = correctContent.slice(); // 배열 복사
-    newArr[activeLine] = modifiedText;
+    newArr[activeLine] = {
+      text: modifiedText,
+      modified: true,
+    };
     setCorrectContent(newArr);
     setModifiedText(""); // 수정하는 input data 리셋
   };
 
   useEffect(() => {
-    setCorrectContent(postContent);
+    // correction upload를 할 때 요구되는 데이터 형식을 만들어준다.
+    let tempArr = [];
+    for (let i = 0; i < postContent.length; i++) {
+      let tmp = {
+        text: postContent[i],
+        modified: false,
+      };
+      tempArr.push(tmp);
+    }
+
+    setCorrectContent(tempArr);
     if (newCorrection && newCorrection.comment) {
       setShowCorrectionModal(false);
     }
@@ -52,7 +81,7 @@ function CorrectionModal(props) {
             <img src={`${amazonS3Url}/component/close-button.png`} />
           </figure>
         </div>
-        <form>
+        <form onSubmit={onSubmit}>
           <div className="content">
             {postContent.map((line, idx) => (
               <div
@@ -68,7 +97,7 @@ function CorrectionModal(props) {
             ))}
             <h4>수정된 내용</h4>
             {correctContent.map((line, idx) => (
-              <div key={idx}>{line}</div>
+              <div key={idx}>{line.text}</div>
             ))}
 
             <div>
@@ -95,9 +124,15 @@ function CorrectionModal(props) {
                 </>
               )}
             </div>
+            <h4>추가 코멘트</h4>
+            <textarea
+              className="text-area"
+              value={additionalText}
+              onChange={onChangeAdditionalText}
+            />
           </div>
           <div className="complete-button">
-            <Button fullWidth outline>
+            <Button fullWidth outline type="submit">
               첨삭 완료
             </Button>
           </div>
