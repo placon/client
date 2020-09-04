@@ -17,6 +17,7 @@
     min-height: 300px;
     background-color: white;
     overflow: scroll;
+    padding-bottom: 30px;
 
     .header {
       display: flex;
@@ -43,6 +44,7 @@
 
       .word {
         cursor: pointer;
+
         &:hover {
           color: green;
         }
@@ -51,6 +53,15 @@
       h4 {
         margin-top: 30px;
         margin-bottom: 10px;
+      }
+    }
+
+    .complete-button {
+      width: 100%;
+      text-align: center;
+      button {
+        margin-top: 30px;
+        width: 80%;
       }
     }
   }
