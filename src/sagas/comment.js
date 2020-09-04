@@ -12,6 +12,9 @@ import {
   DELETE_CORRECTION_REQUEST,
   DELETE_CORRECTION_SUCCESS,
   DELETE_CORRECTION_FAILURE,
+  LOAD_CORRECTION_REQUEST,
+  LOAD_CORRECTION_SUCCESS,
+  LOAD_CORRECTION_FAILURE,
 } from "../reducers/comment";
 
 import commentApi from "../api/comment";
@@ -81,6 +84,7 @@ function* writeCorrection(action) {
         type: WRITE_CORRECTION_SUCCESS,
         payload: data.uploaded_correction,
       });
+      alert("첨삭 댓글이 등록되었습니다!!");
     } else {
       yield put({
         type: WRITE_CORRECTION_FAILURE,
@@ -92,6 +96,26 @@ function* writeCorrection(action) {
   }
 }
 
+// 첨삭 댓글 리스트
+function* loadCorrectionList(action) {
+  try {
+    const { data } = yield call(commentApi.correctionList, action.payload);
+    if (data && data.display_correction_list_success) {
+      console.log("sdfsf", data);
+      yield put({
+        type: LOAD_CORRECTION_SUCCESS,
+        payload: data,
+      });
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+function* watchCorrectionList() {
+  yield takeEvery(LOAD_CORRECTION_REQUEST, loadCorrectionList);
+}
+
 function* watchWriteCorrection() {
   yield takeEvery(WRITE_CORRECTION_REQUEST, writeCorrection);
 }
@@ -101,5 +125,6 @@ export default function* commentSaga() {
     fork(watchWriteComment),
     fork(watchDeleteComment),
     fork(watchWriteCorrection),
+    fork(watchCorrectionList),
   ]);
 }

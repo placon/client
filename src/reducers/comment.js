@@ -23,6 +23,7 @@ export const initialState = {
     comments: null,
     loading: false,
     error: null,
+    nextPageIndex: 0,
   },
 };
 
@@ -61,7 +62,16 @@ export const DELETE_CORRECTION_REQUEST = "DELETE_CORRECTION_REQUEST";
 export const DELETE_CORRECTION_SUCCESS = "DELETE_CORRECTION_SUCCESS";
 export const DELETE_CORRECTION_FAILURE = "DELETE_CORRECTION_FAILURE";
 export const deleteCorrection = (data) => ({
-  type: DELETE_CORRECTIOn_REQUEST,
+  type: DELETE_CORRECTION_REQUEST,
+  payload: data,
+});
+
+// 첨삭 댓글 리스트
+export const LOAD_CORRECTION_REQUEST = "LOAD_CORRECTION_REQUEST";
+export const LOAD_CORRECTION_SUCCESS = "LOAD_CORRECTION_SUCCESS";
+export const LOAD_CORRECTION_FAILURE = "LOAD_CORRECTION_FAILURE";
+export const loadCorrectionList = (data) => ({
+  type: LOAD_CORRECTION_REQUEST,
   payload: data,
 });
 
@@ -142,6 +152,37 @@ export default function (state = initialState, action) {
           comment: action.payload,
           loading: false,
           error: null,
+        },
+      };
+
+    case LOAD_CORRECTION_REQUEST:
+      return {
+        ...state,
+        correctionList: {
+          comments: null,
+          loading: true,
+          error: null,
+          nextPageIndex: 0,
+        },
+      };
+    case LOAD_CORRECTION_SUCCESS:
+      return {
+        ...state,
+        correctionList: {
+          comments: action.payload.correction_list,
+          loading: false,
+          error: null,
+          nextPageIndex: action.payload.next_page_index,
+        },
+      };
+    case LOAD_CORRECTION_FAILURE:
+      return {
+        ...state,
+        correctionList: {
+          comments: null,
+          loading: false,
+          error: action.payload,
+          nextPageIndex: 0,
         },
       };
 

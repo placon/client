@@ -112,7 +112,7 @@ function PostForm(props) {
           <img src={`${amazonS3Url}/correction.svg`} />
         </figure>
       </section>
-      {showComment && <CommentList postId={_id} />}
+      {showComment && <CommentList postId={_id} postContent={post_context} />}
       {showCorrectionModal && (
         <CorrectionModal
           setShowCorrectionModal={setShowCorrectionModal}

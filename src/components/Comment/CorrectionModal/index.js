@@ -62,9 +62,6 @@ function CorrectionModal(props) {
     }
 
     setCorrectContent(tempArr);
-    if (newCorrection && newCorrection.comment) {
-      setShowCorrectionModal(false);
-    }
   }, [newCorrection]);
 
   return (

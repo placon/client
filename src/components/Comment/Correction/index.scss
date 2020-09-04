@@ -1,4 +1,4 @@
-.comment-component {
+.correction-component {
   display: flex;
   border: 1px solid gray;
   width: 100%;
@@ -12,6 +12,7 @@
   }
 
   .content {
+    width: 100%;
     .user-id {
       padding-top: 6px;
       padding-bottom: 10px;
@@ -26,6 +27,19 @@
 
     .text {
       font-size: 14px;
+      width: 100%;
+
+      &.original {
+        padding-bottom: 20px;
+      }
+      &.correction {
+        padding-top: 20px;
+      }
+
+      .modified {
+        color: #ff3333;
+        font-weight: bold;
+      }
     }
   }
 }

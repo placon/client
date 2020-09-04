@@ -4,9 +4,10 @@ import "./index.scss";
 import { writeComment, deleteComment } from "../../../reducers/comment";
 import { useDispatch, useSelector } from "react-redux";
 import commentApi from "../../../api/comment";
+import CorrectionList from "../CorrectionList";
 
 function CommentList(props) {
-  const { postId } = props; // 포스트 아이디
+  const { postId, postContent } = props; // 포스트 아이디
   const dispatch = useDispatch();
   const { newComment } = useSelector((state) => state.comment);
 
@@ -23,8 +24,6 @@ function CommentList(props) {
     if (!hasMore) {
       return;
     }
-
-    console.log("요청하는 pageIndex", pageIndex);
 
     let pageSize = 5; // 메서드를 한 번 호출할 때마다 가져올 댓글의 개수
     const { data } = await commentApi.commentList({
@@ -90,6 +89,7 @@ function CommentList(props) {
       })
     );
     setCommentContent("");
+    setCommentTab(0);
   };
 
   const onDeleteComment = (comment_id) => {
@@ -127,18 +127,27 @@ function CommentList(props) {
         </div>
       </div>
 
-      {myInfo &&
-        commentList.map((comment, idx) => (
-          <Comment
-            key={idx}
-            commentData={comment}
-            isMyComment={myInfo._id === comment.commented_by._id}
-            onDeleteComment={onDeleteComment}
-          />
-        ))}
-      <div className="show-more-button" onClick={loadMoreComments}>
-        댓글 더 보기 ...
+      <div className={`${commentTab === 0 ? "visible" : "invisible"}`}>
+        {myInfo &&
+          commentList.map((comment, idx) => (
+            <Comment
+              key={idx}
+              commentData={comment}
+              isMyComment={myInfo._id === comment.commented_by._id}
+              onDeleteComment={onDeleteComment}
+            />
+          ))}
       </div>
+      <div className={`${commentTab === 1 ? "visible" : "invisible"}`}>
+        {myInfo && <CorrectionList postId={postId} postContent={postContent} />}
+      </div>
+
+      {hasMore && commentTab === 0 && (
+        <div className="show-more-button" onClick={loadMoreComments}>
+          댓글 더 보기 ...
+        </div>
+      )}
+
       <form onSubmit={onSubmitComment}>
         <div className="comment-write-form">
           <textarea
