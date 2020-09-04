@@ -10,8 +10,15 @@ import { useDispatch, useSelector } from "react-redux";
 
 function PostForm(props) {
   const { postData, isMyPost, onDeletePost, onUpdatePost, myInfo } = props;
-  const { _id, hashtags, post_context, post_images, posted_by } = postData;
-  console.log(postData);
+  const {
+    _id,
+    hashtags,
+    post_context,
+    post_images,
+    posted_by,
+    like_users,
+  } = postData;
+  // console.log(postData);
   const {
     gender,
     name,
@@ -21,8 +28,10 @@ function PostForm(props) {
     target_language,
   } = posted_by;
   const [showComment, setShowComment] = useState(false);
+  const [isRed, setIsRed] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
   const dispatch = useDispatch();
-  const { likePostId, likeUsers } = useSelector((state) => state.post);
+  const { likePostId, likeUsers, isLike } = useSelector((state) => state.post);
 
   const onClickLike = () => {
     dispatch(
@@ -33,7 +42,12 @@ function PostForm(props) {
   };
 
   useEffect(() => {
-    console.log("");
+    setLikeCount(like_users.length);
+    if (like_users.includes(myInfo._id)) {
+      setIsRed(true);
+    } else {
+      setIsRed(false);
+    }
   }, [likePostId, likeUsers]);
 
   return (
@@ -97,13 +111,14 @@ function PostForm(props) {
       </section>
       <section className="post-status-bar">
         <figure className="status-icon" onClick={onClickLike}>
-          {likeUsers && likeUsers.includes(myInfo._id) && likePostId === _id ? (
+          {(likeUsers.includes(myInfo._id) && likePostId === _id && isLike) ||
+          like_users.includes(myInfo._id) ? (
             <img src={`${amazonS3Url}/fullheart.svg`} />
           ) : (
             <img src={`${amazonS3Url}/emptyheart.svg`} />
           )}
         </figure>
-        <span className="number-data">{likeUsers.length}</span>
+        <span className="number-data">{like_users.length}</span>
         <figure
           className="status-icon"
           onClick={() => {

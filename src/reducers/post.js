@@ -34,6 +34,7 @@ export const initialState = {
 
   likePostId: null,
   likeUsers: [],
+  isLike: false,
 };
 
 // 포스트 리스트
@@ -172,21 +173,23 @@ export default function (state = initialState, action) {
     case POST_LIKE_REQUEST:
       return {
         ...state,
-        postLikeId: null,
+        likePostId: null,
         likeUsers: [],
+        isLike: false,
       };
 
     case POST_LIKE_SUCCESS:
       return {
         ...state,
-        postLikeId: action.payload.like_info.post_id,
+        likePostId: action.payload.like_info.post_id,
         likeUsers: action.payload.like_info.like_users,
+        isLike: action.payload.like_info.is_like,
       };
 
     case POST_LIKE_FAILURE:
       return {
         ...state,
-        postLikeId: null,
+        likePostId: null,
       };
 
     default:
