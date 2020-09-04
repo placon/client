@@ -98,6 +98,7 @@ function PostList(props) {
               onDeletePost={onDeletePost}
               onUpdatePost={onUpdatePost}
               isMyPost={post.posted_by._id === myInFo._id}
+              myInfo={myInFo}
             />
           ))}
       </>

@@ -31,6 +31,9 @@ export const initialState = {
     loading: false,
     error: null,
   },
+
+  likePostId: null,
+  likeUsers: [],
 };
 
 // 포스트 리스트
@@ -80,6 +83,16 @@ export const POST_DETAIL_FAILURE = "POST_DETAIL_FAILURE";
 
 export const postDetailRequest = (data) => ({
   type: POST_DETAIL_REQUEST,
+  payload: data,
+});
+
+// 포스트 좋아요
+export const POST_LIKE_REQUEST = "POST_LIE_REQUEST";
+export const POST_LIKE_SUCCESS = "POST_LIKE_SUCCESS";
+export const POST_LIKE_FAILURE = "POST_LIKE_FAILURE";
+
+export const postLikeRequest = (data) => ({
+  type: POST_LIKE_REQUEST,
   payload: data,
 });
 
@@ -153,6 +166,27 @@ export default function (state = initialState, action) {
           error: action.payload.error,
           loading: false,
         },
+      };
+
+    // 포스트 좋아요 or 좋아요 취소
+    case POST_LIKE_REQUEST:
+      return {
+        ...state,
+        postLikeId: null,
+        likeUsers: [],
+      };
+
+    case POST_LIKE_SUCCESS:
+      return {
+        ...state,
+        postLikeId: action.payload.like_info.post_id,
+        likeUsers: action.payload.like_info.like_users,
+      };
+
+    case POST_LIKE_FAILURE:
+      return {
+        ...state,
+        postLikeId: null,
       };
 
     default:

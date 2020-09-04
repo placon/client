@@ -9,6 +9,9 @@ import {
   POST_LIST_REQUEST,
   POST_LIST_SUCCESS,
   POST_LIST_FAILURE,
+  POST_LIKE_REQUEST,
+  POST_LIKE_SUCCESS,
+  POST_LIKE_FAILURE,
 } from "../reducers/post";
 
 import postApi from "../api/post";
@@ -95,6 +98,39 @@ function* deletePost(action) {
   }
 }
 
+// 포스트 좋아요 & 좋아요 취소
+function* likePost(action) {
+  try {
+    const result = yield call(postApi.likePost, action.payload);
+    console.log(result);
+    const { data } = result;
+    if (data && data.update_like_success) {
+      console.log("saga에서 결과확인", data);
+      yield put({
+        type: POST_LIKE_SUCCESS,
+        payload: data,
+      });
+      alert("좋아요 반영 완료");
+    } else {
+      yield put({
+        type: POST_LIKE_FAILURE,
+        payload: data,
+      });
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+function* watchLikePost() {
+  yield takeEvery(POST_LIKE_REQUEST, likePost);
+}
+
 export default function* postSaga() {
-  yield all([fork(watchWritePost), fork(watchDeletePost), fork(watchPostList)]);
+  yield all([
+    fork(watchWritePost),
+    fork(watchDeletePost),
+    fork(watchPostList),
+    fork(watchLikePost),
+  ]);
 }

@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./index.scss";
 import Button from "../../ui/Button";
 import ProfileImage from "../../ui/ProfileImage";
 import { amazonS3Url } from "../../../config/config";
 import { Link } from "react-router-dom";
 import CommentList from "../../Comment/CommentList";
+import { postLikeRequest } from "../../../reducers/post";
+import { useDispatch, useSelector } from "react-redux";
 
 function PostForm(props) {
-  const { postData, isMyPost, onDeletePost, onUpdatePost } = props;
+  const { postData, isMyPost, onDeletePost, onUpdatePost, myInfo } = props;
   const { _id, hashtags, post_context, post_images, posted_by } = postData;
+  console.log(postData);
   const {
     gender,
     name,
@@ -18,6 +21,20 @@ function PostForm(props) {
     target_language,
   } = posted_by;
   const [showComment, setShowComment] = useState(false);
+  const dispatch = useDispatch();
+  const { likePostId, likeUsers } = useSelector((state) => state.post);
+
+  const onClickLike = () => {
+    dispatch(
+      postLikeRequest({
+        post_id: _id,
+      })
+    );
+  };
+
+  useEffect(() => {
+    console.log("");
+  }, [likePostId, likeUsers]);
 
   return (
     <div className="post-form-container">
@@ -79,9 +96,14 @@ function PostForm(props) {
         ))}
       </section>
       <section className="post-status-bar">
-        <figure className="status-icon">
-          <img src={`${amazonS3Url}/heart-empty.svg`} />
+        <figure className="status-icon" onClick={onClickLike}>
+          {likeUsers && likeUsers.includes(myInfo._id) && likePostId === _id ? (
+            <img src={`${amazonS3Url}/fullheart.svg`} />
+          ) : (
+            <img src={`${amazonS3Url}/emptyheart.svg`} />
+          )}
         </figure>
+        <span className="number-data">{likeUsers.length}</span>
         <figure
           className="status-icon"
           onClick={() => {
@@ -90,6 +112,7 @@ function PostForm(props) {
         >
           <img src={`${amazonS3Url}/comment.svg`} />
         </figure>
+        {/* <span className="number-data">{postData.annotation_users.length}</span> */}
       </section>
       {showComment && <CommentList postId={_id} />}
     </div>

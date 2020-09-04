@@ -81,9 +81,18 @@
 
     .status-icon {
       cursor: pointer;
+      img {
+        width: 24px;
+        height: 24px;
+      }
     }
     .status-icon + .status-icon {
       margin-left: 20px;
+    }
+
+    .number-data {
+      margin-left: 5px;
+      margin-right: 15px;
     }
   }
 }

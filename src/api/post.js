@@ -48,11 +48,10 @@ function updatePost(data) {
   // return axios.put("/api/posts/update");
 }
 
-// 포스트 상세보기
-function seePostDetail(data) {
-  console.log(data);
-  return null;
-  // return axios.get("/api/posts/detail");
+// 포스트 좋아요 / 좋아요 취소
+function likePost(sendingData) {
+  const { post_id } = sendingData;
+  return axios.get(`/api/posts/like/${post_id}`);
 }
 
 export default {
@@ -61,5 +60,5 @@ export default {
   writePost,
   deletePost,
   updatePost,
-  seePostDetail,
+  likePost,
 };
