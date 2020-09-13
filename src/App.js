@@ -6,6 +6,7 @@ import SignupPage from "./pages/signup/SignupPage";
 import LoginPage from "./pages/login/LoginPage";
 import HomePage from "./pages/home/HomePage";
 import ProfilePage from "./pages/profile/ProfilePage";
+import ChatPage from "./pages/chat/ChatPage";
 import TestPage from "./pages/TestPage";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route exact path="/signup" component={Auth(SignupPage, false)} />
         <Route exact path="/login" component={Auth(LoginPage, false)} />
         <Route exact path="/profile" component={Auth(ProfilePage, true)} />
+        <Route exact path="/chat" component={Auth(ChatPage, true)} />
       </Switch>
     </>
   );

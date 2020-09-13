@@ -3,6 +3,7 @@ import "./index.scss";
 import ProfileImage from "../../ui/ProfileImage";
 import Button from "../../ui/Button";
 import { amazonS3Url } from "../../../config/config";
+import { Link } from "react-router-dom";
 
 function ProfileBox(props) {
   const { userInfo, setShowImageModal, isMe } = props;
@@ -38,9 +39,11 @@ function ProfileBox(props) {
                     프로필 편집
                   </Button>
                 ) : (
-                  <Button size="small" outline>
-                    메세지
-                  </Button>
+                  <Link to={{ pathname: "/chat", state: { userInfo } }}>
+                    <Button size="small" outline>
+                      메세지
+                    </Button>
+                  </Link>
                 )}
               </div>
               <div className="row">

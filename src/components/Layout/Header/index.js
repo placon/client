@@ -38,7 +38,9 @@ function index({ login, userInfo }) {
         <div className="right">
           {login ? (
             <>
-              <figure className="mailbox"></figure>
+              <Link to={{ pathname: "/chat", state: { userInfo: userInfo } }}>
+                <figure className="mailbox"></figure>
+              </Link>
               <Link
                 to={{ pathname: "/profile", state: { email: userInfo.email } }}
               >

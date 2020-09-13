@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
+import Chat from "../../components/Chat";
 
-function ChatPage() {
-  return <div>메세지 페이지</div>;
+function ChatPage(props) {
+  return (
+    <>
+      {props.location.state.userInfo && (
+        <Chat userInfo={props.location.state.userInfo} />
+      )}
+    </>
+  );
 }
 
 export default ChatPage;
