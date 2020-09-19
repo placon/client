@@ -1,0 +1,23 @@
+.ChatRoomComponent {
+  border: 1px solid gray;
+  max-width: 200px;
+  height: 50px;
+  display: flex;
+  padding: 0 10px;
+
+  .user-profile {
+    display: flex;
+    align-items: center;
+  }
+  .text-field {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 10px;
+
+    .user-id {
+      margin: 0;
+      font-weight: 600;
+    }
+  }
+}

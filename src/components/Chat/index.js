@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ChatRoom from "./ChatRoom";
 import "./index.scss";
 
 function Chat(props) {
@@ -10,7 +11,7 @@ function Chat(props) {
   }, []);
   return (
     <div className="ChatPageComponent">
-      <div>sdfsdf</div>
+      <ChatRoom />
     </div>
   );
 }
