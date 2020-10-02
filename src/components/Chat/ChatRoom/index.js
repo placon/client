@@ -3,17 +3,20 @@ import "./index.scss";
 import ProfileImage from "../../ui/ProfileImage";
 import { amazonS3Url } from "../../../config/config";
 
-function ChatRoom() {
+function ChatRoom(props) {
+  const { users, myInfo } = props;
+  const sender = users[0]._id !== myInfo._id ? users[0] : users[1];
+  console.log(users, myInfo);
   return (
     <div className="ChatRoomComponent">
       <div className="user-profile">
         <ProfileImage
           size="small"
-          imageUrl={`${amazonS3Url}/profile-default.png`}
+          imageUrl={`${amazonS3Url}/user/${sender._id}/${sender.profile_image}`}
         />
       </div>
       <div className="text-field">
-        <h4 className="user-id">Pretty123</h4>
+        <h4 className="user-id">{sender.name}</h4>
         <div className="message">meessage dsafad~ ..</div>
       </div>
     </div>

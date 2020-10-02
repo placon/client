@@ -3,8 +3,9 @@ import "./index.scss";
 
 // name은 내 이름이 되어야 함. 혹은 아이디
 // user가 상대방 이름 혹은 상대방 아이디
-function Message({ message: { text, user }, name }) {
+function Message(props) {
   const isMe = user === name;
+  const { _id, send_by, message, register_date } = props;
 
   return (
     <>

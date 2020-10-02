@@ -10,12 +10,11 @@ async function createMessageRoom({ user_id }) {
 
 // 메세지 룸 리스트.
 async function getMessageRoomList({ page_index, page_size }) {
-  const result = await axios.get(
+  const { data } = await axios.get(
     `/api/messages/room/list/${page_index}/${page_size}`
   );
-  console.log("test here : ", result);
 
-  return null;
+  return data;
 }
 
 // 메세지 룸 진입

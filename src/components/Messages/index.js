@@ -19,17 +19,22 @@ export default Messages;
 Messages.defaultProps = {
   messages: [
     {
-      text: "test est esttsetst test ste st",
-      user: "홍길동",
+      _id: "sdfdsafdsafs",
+      send_by: "sfdsfsf",
+      message: "test est esttsetst test ste st",
+      register_date: "2020-10-02",
     },
     {
-      text: "이것은 예시 메세지이다 이 녀석아",
-      user: "낯선 그녀 ",
+      _id: "sdfdsafdsafs",
+      send_by: "낯선 그녀",
+      message: "이것은 테스트다.",
+      register_date: "2020-10-02",
     },
     {
-      text: "그대의 눈동자에 건배....",
-      user: "낯선 그 남자...",
+      _id: "sdfdsafdsafs",
+      send_by: "낯선 그녀",
+      message: "그대의 눈동자에 건배",
+      register_date: "2020-10-02",
     },
   ],
-  name: "홍길동",
 };
