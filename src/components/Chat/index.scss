@@ -1,3 +1,17 @@
 .ChatPageComponent {
-  padding-top: 70px;
+  display: flex;
+  height: 70%;
+  max-height: 630px;
+  max-width: 760px;
+  margin: 0 auto;
+
+  border: 1px solid gray;
+
+  .room-list {
+    border-right: 1px solid gray;
+  }
+
+  .chat-screen {
+    margin-left: 20px;
+  }
 }

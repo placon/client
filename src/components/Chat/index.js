@@ -19,9 +19,36 @@ function Chat(props) {
   const [messages, setMessages] = useState([]);
   const [myInfo, setMyInfo] = useState();
 
+  const enterMessageRoom = async (room_id) => {
+    const data = await chatApi.enterMessageRoom({
+      room_info: room_id,
+      user_id: props.userInfo._id,
+    });
+    if (data) {
+      console.log("룸 들어가기 성공", data);
+      setMessages(data.message_list); // 받아온 메세지 리스트 설정.
+    }
+  };
+
   useEffect(() => {
     const myInfoByStorage = JSON.parse(window.sessionStorage.getItem("myInfo"));
     setMyInfo(myInfoByStorage);
+    console.log("props로 받은 유저인포", props.userInfo);
+    if (props.userInfo._id !== myInfoByStorage._id) {
+      const createMessageRoom = async () => {
+        const data = await chatApi.createMessageRoom({
+          user_id: props.userInfo._id,
+        });
+        console.log("데이터 확인", data);
+        if (data) {
+          console.log("세팅하는 방 이름 : ", data.created_room._id);
+          setRoom(data.created_room._id);
+          enterMessageRoom(data.created_room._id);
+        }
+      };
+      createMessageRoom();
+    }
+
     // socket = io.connect("localhost:3000", {
     //   path: "/socket.io",
     // });
@@ -50,11 +77,12 @@ function Chat(props) {
   return (
     <div className="ChatPageComponent">
       <div className="room-list">
-        {rooms.map((room, idx) => (
-          <ChatRoom key={idx} users={room.users} myInfo={myInfo} />
-        ))}
+        {rooms &&
+          rooms.map((room) => (
+            <ChatRoom key={room._id} users={room.users} myInfo={myInfo} />
+          ))}
       </div>
-      <div className="chat-screen">대화 주고받기 메세지 전송 등등</div>
+      <div className="chat-screen">{room ? <div>d</div> : <div>👀</div>}</div>
     </div>
   );
 }
