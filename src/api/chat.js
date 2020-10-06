@@ -39,8 +39,9 @@ async function getMessageList({ room_info, page_index, page_size }) {
 
 // 메세지 전송
 async function sendMessage(sendingData) {
-  const result = await axios.post(`/api/message/send`, sendingData);
-  console.log(result);
+  console.log("보내는 데이터", sendingData);
+  const result = await axios.post(`/api/messages/message/send`, sendingData);
+  console.log("메세지 전송 테스트 api", result);
 
   return null;
 }
