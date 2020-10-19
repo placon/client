@@ -2,7 +2,8 @@ import React from "react";
 import "./index.scss";
 
 const Input = ({ message, setMessage, onSendMessage }) => (
-  <form className="form" onSubmit={(e) => onSendMessage(e)}>
+  // <form className="form" onSubmit={(e) => onSendMessage(e)}>
+  <form className="form" onSubmit={onSendMessage}>
     <input
       className="input"
       type="text"

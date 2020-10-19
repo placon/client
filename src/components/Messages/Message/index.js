@@ -4,8 +4,7 @@ import "./index.scss";
 // name은 내 이름이 되어야 함. 혹은 아이디
 // user가 상대방 이름 혹은 상대방 아이디
 function Message(props) {
-  const isMe = user === name;
-  const { _id, send_by, message, register_date } = props;
+  const { message, registerDate, sender, isMe } = props;
 
   return (
     <>
@@ -14,15 +13,16 @@ function Message(props) {
         <div className="messageContainer justifyEnd">
           {/* <p className="sentText pr-10">{name}</p> */}
           <div className="messageBox">
-            <p className="messageText">{text}</p>
+            <p className="messageText">{message}</p>
           </div>
         </div>
       ) : (
         //   상대방 메세지
         <div className="messageContainer justifyStart">
-          <p className="sentText pr-10">{user}</p>
+          {/* <p className="sentText pr-10">{user}</p> */}
+          <p className="sentText pr-10">User</p>
           <div className="messageBox">
-            <p className="messageText">{text}</p>
+            <p className="messageText">{message}</p>
           </div>
         </div>
       )}

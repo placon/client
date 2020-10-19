@@ -21,15 +21,15 @@ function Chat(props) {
   const [myInfo, setMyInfo] = useState();
 
   const enterMessageRoom = async (room_id) => {
-    console.log("룸아이디", room_id);
-    const data = await chatApi.enterMessageRoom({
-      room_info: room_id,
-      user_id: props.userInfo._id,
-    });
-    if (data) {
-      console.log("룸 들어가기 성공", data);
-      setMessages(data.message_list); // 받아온 메세지 리스트 설정.
-    }
+    chatApi
+      .enterMessageRoom({
+        room_info: room_id,
+        user_id: props.userInfo._id,
+      })
+      .then((response) => {
+        console.log("룸 들어가기 성공", response);
+        setMessages(response.message_list); // 받아온 메세지 리스트 설정.
+      });
   };
 
   // 룸 클릭
@@ -41,22 +41,19 @@ function Chat(props) {
       `localhost:3000/message?room_id=${room_id}&user_id=${props.userInfo._id}`
     );
 
-    console.log("소켓소켓: ", messageSocket);
+    messageSocket.on("message", (data) => {
+      console.log("받는 메세지 데이터1", data);
+      setMessages((prev) => [...prev, data]);
+    });
+
     enterMessageRoom(room_id);
   };
 
   // 메세지 전송
-  const onSendMessage = async (e) => {
-    e.preventDefault(); // 새로고침 막고
-    const data = await chatApi.sendMessage({ room_info: room, message });
-    console.log("컴포넌트에서 메세지 전송 테스트", data);
-
-    messageSocket.on("message", (data) => {
-      console.log("받는 메세지 데이터", data);
-    });
-    roomSocket.on("message", (data) => {
-      console.log("받는 메세지 데이터", data);
-    });
+  const onSendMessage = (e) => {
+    e.preventDefault();
+    chatApi.sendMessage({ room_info: room, message }); // 메세지 전송
+    setMessage("");
   };
 
   useEffect(() => {
@@ -64,24 +61,13 @@ function Chat(props) {
     setMyInfo(myInfoByStorage);
 
     // 1. 상대방 프로필 페이지에서 메세지 보내기를 클릭한 경우.
-    if (props.userInfo._id !== myInfoByStorage._id) {
-      const createMessageRoom = async () => {
-        const data = await chatApi.createMessageRoom({
-          user_id: props.userInfo._id,
-        });
 
-        if (data) {
-          // console.log("세팅하는 방 이름 : ", data.created_room._id);
-          setRoom(data.created_room._id);
-          enterMessageRoom(data.created_room._id);
-        }
-      };
-      createMessageRoom();
-    }
+    // chatApi.createMessageRoom({
+    //   user_id: props.userInfo._id,
+    // }).then(response => {
+    //   setRoom(response.created_room._id)
+    // })
 
-    // socket = io.connect("localhost:3000", {
-    //   path: "/socket.io",
-    // });
     socket = io("localhost:3000", {
       path: "/socket.io",
     });
@@ -93,22 +79,21 @@ function Chat(props) {
     let page_index = 0;
     let page_size = 5;
 
-    const getMessageRoomList = async () => {
-      const data = await chatApi.getMessageRoomList({
+    chatApi
+      .getMessageRoomList({
         page_index,
         page_size,
+      })
+      .then((response) => {
+        setRooms(response.room_list);
       });
-      console.log("sdfdsf", data.room_list);
-      if (data) {
-        setRooms(data.room_list);
-      }
-    };
-    getMessageRoomList();
 
     return () => {
+      messageSocket.disconnect();
       roomSocket.disconnect();
     };
   }, []);
+
   return (
     <div className="ChatPageComponent">
       <div className="room-list">
@@ -127,7 +112,16 @@ function Chat(props) {
         {room ? (
           <div className="chat-screen">
             <div className="message-list">
-              {/* {messages && messages.map((message) => <Message />)} */}
+              {messages &&
+                messages.map((message) => (
+                  <Message
+                    key={message._id}
+                    message={message.message}
+                    registerDate={message.register_date}
+                    sender={message.send_by}
+                    isMe={myInfo._id === message.send_by}
+                  />
+                ))}
             </div>
             <Input
               message={message}
