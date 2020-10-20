@@ -1,19 +1,26 @@
 .messageBox {
   background: #f3f3f3;
-  border-radius: 20px;
-  padding: 5px 20px;
+  border-radius: 10px;
+  padding: 2px 10px;
   color: white;
   display: inline-block;
   max-width: 80%;
+
+  &.mine {
+    background-color: #027dff;
+    color: white;
+  }
+  &.sender {
+    color: black;
+  }
 }
 
 .messageText {
   width: 100%;
   letter-spacing: 0;
   float: left;
-  font-size: 1.1em;
+  font-size: 14px;
   word-wrap: break-word;
-  color: black;
 }
 
 .messageText img {
@@ -33,6 +40,7 @@
   font-family: Helvetica;
   color: #828282;
   letter-spacing: 0.3px;
+  font-size: 14px;
 }
 
 .pl-10 {

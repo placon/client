@@ -29,12 +29,11 @@ async function enterMessageRoom({ room_info, user_id }) {
 
 // 메세지 리스트
 async function getMessageList({ room_info, page_index, page_size }) {
-  const result = await axios.get(
-    `/api/room/enter/${room_info}/${page_index}/${page_size}`
+  const { data } = await axios.get(
+    `/api/messages/message/list/${room_info}/${page_index}/${page_size}`
   );
-  console.log(result);
 
-  return null;
+  return data;
 }
 
 // 메세지 전송

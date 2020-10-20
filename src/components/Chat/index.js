@@ -19,8 +19,10 @@ function Chat(props) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [myInfo, setMyInfo] = useState();
+  const [messagePage, setMessagePage] = useState(1); // 메세지 리스트 불러올 때 사용
+  const [hasMoreMessage, setHasMoreMessage] = useState(true);
 
-  const enterMessageRoom = async (room_id) => {
+  const enterMessageRoom = (room_id) => {
     chatApi
       .enterMessageRoom({
         room_info: room_id,
@@ -42,7 +44,6 @@ function Chat(props) {
     );
 
     messageSocket.on("message", (data) => {
-      console.log("받는 메세지 데이터1", data);
       setMessages((prev) => [...prev, data]);
     });
 
@@ -56,17 +57,30 @@ function Chat(props) {
     setMessage("");
   };
 
+  // 메세지 불러오기
+  const loadMoreMessage = () => {
+    if (!hasMoreMessage) return;
+    let page_size = 8;
+    chatApi
+      .getMessageList({
+        room_info: room,
+        page_index: messagePage + 1,
+        page_size,
+      })
+      .then((response) => {
+        const newArr = [...response.message_list, ...messages];
+        setMessages(newArr);
+        setMessagePage((prev) => prev + 1);
+
+        if (response.message_list.length < page_size) {
+          setHasMoreMessage(false);
+        }
+      });
+  };
+
   useEffect(() => {
     const myInfoByStorage = JSON.parse(window.sessionStorage.getItem("myInfo"));
     setMyInfo(myInfoByStorage);
-
-    // 1. 상대방 프로필 페이지에서 메세지 보내기를 클릭한 경우.
-
-    // chatApi.createMessageRoom({
-    //   user_id: props.userInfo._id,
-    // }).then(response => {
-    //   setRoom(response.created_room._id)
-    // })
 
     socket = io("localhost:3000", {
       path: "/socket.io",
@@ -111,6 +125,7 @@ function Chat(props) {
       <>
         {room ? (
           <div className="chat-screen">
+            <button onClick={loadMoreMessage}>Load old Messages</button>
             <div className="message-list">
               {messages &&
                 messages.map((message) => (

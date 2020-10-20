@@ -12,7 +12,7 @@ function Message(props) {
         //  내 메세지
         <div className="messageContainer justifyEnd">
           {/* <p className="sentText pr-10">{name}</p> */}
-          <div className="messageBox">
+          <div className="messageBox mine">
             <p className="messageText">{message}</p>
           </div>
         </div>
@@ -21,7 +21,7 @@ function Message(props) {
         <div className="messageContainer justifyStart">
           {/* <p className="sentText pr-10">{user}</p> */}
           <p className="sentText pr-10">User</p>
-          <div className="messageBox">
+          <div className="messageBox sender">
             <p className="messageText">{message}</p>
           </div>
         </div>

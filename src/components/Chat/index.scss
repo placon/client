@@ -9,11 +9,24 @@
 
   .room-list {
     border-right: 1px solid gray;
+    width: 30%;
   }
 
   .chat-screen {
     margin-left: 20px;
-    overflow-x: scroll;
-    overflow-y: hidden;
+    max-height: 550px;
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+
+    .message-list {
+      overflow-x: hidden;
+      overflow-y: scroll;
+      height: 100%;
+    }
+
+    .form {
+      margin-top: auto;
+    }
   }
 }
